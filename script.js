@@ -273,50 +273,35 @@ function renderProjectDetail() {
     project = webProjectData[projectId];
   }
 
-  if (project) {
-    const titleElement = document.querySelector(".title");
-    const imgElement = document.querySelector(".project-img");
-    const descriptionElement = document.querySelector(".article-description");
-    const liveDemoButton = document.querySelector(".btn");
+if (project) {
 
-    if (titleElement) titleElement.textContent = project.title;
-    if (imgElement) {
-      imgElement.src = project.imgSrc;
-      imgElement.alt = project.imgAlt;
-    }
-    if (descriptionElement) descriptionElement.textContent = project.description;
-    if (liveDemoButton) {
-      liveDemoButton.setAttribute("onclick", `location.href='${project.liveDemoLink}'`);
-    }
+  const lang = localStorage.getItem("lang") || "en";
 
-    const tagsContainer = document.querySelector(".project-tags");
-    if (tagsContainer && project.tags) {
-      tagsContainer.innerHTML = '';
-      tagsContainer.style.display = 'flex';
-      tagsContainer.style.flexWrap = 'wrap';
-      tagsContainer.style.gap = '0.5rem';
-      tagsContainer.style.justifyContent = 'center';
-      tagsContainer.style.marginTop = '1rem';
-      
-      project.tags.forEach(tag => {
-        const tagElement = document.createElement('span');
-        tagElement.textContent = tag;
-        tagElement.style.padding = '0.3rem 0.8rem';
-        tagElement.style.backgroundColor = '#f0f0f0';
-        tagElement.style.border = '1px solid rgb(163, 163, 163)';
-        tagElement.style.borderRadius = '1rem';
-        tagElement.style.fontSize = '0.9rem';
-        tagElement.style.color = 'rgb(85, 85, 85)';
-        tagElement.style.fontWeight = '500';
-        tagsContainer.appendChild(tagElement);
-      });
-    }
-  } else {
-    const articleSection = document.getElementById("article");
-    if (articleSection) {
-      articleSection.innerHTML = "<p>Project not found. Please provide a valid category and ID in the URL.</p>";
-    }
+  const titleElement = document.querySelector(".title");
+  const imgElement = document.querySelector(".project-img");
+  const descriptionElement = document.querySelector(".article-description");
+  const liveDemoButton = document.querySelector(".btn");
+
+  if (titleElement) {
+    titleElement.textContent = project.title[lang];
   }
+
+  if (imgElement) {
+    imgElement.src = project.imgSrc;
+    imgElement.alt = project.imgAlt;
+  }
+
+  if (descriptionElement) {
+    descriptionElement.textContent = project.description[lang];
+  }
+
+  if (liveDemoButton) {
+    liveDemoButton.setAttribute(
+      "onclick",
+      `location.href='${project.liveDemoLink}'`
+    );
+  }
+}
 }
 
 // ============================================
