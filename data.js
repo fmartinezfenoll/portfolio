@@ -5,7 +5,7 @@ const experienceData = [
   {
     title: "Unity Developer | Netcode & Game Design Specialist",
     company: "GGTech Entertainment",
-    description: "Developed multiplayer gameplay systems and optimized network features using Unity Netcode. Contributed to gameplay design, prototyping, and technical documentation during a production-level internship.",
+    description: "Developed multiplayer gameplay systems and optimized network features using Unity Netcode. Contributed to gameplay design, prototyping, and technical documentation.",
     skills: ["Unity", "Netcode", "Design", "Git / Asana", "QA / TDD"]
   },
   {
