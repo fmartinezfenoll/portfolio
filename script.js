@@ -247,6 +247,84 @@ function animarIconos(conMovimiento) {
   );
 }
 
+// Experiencia: el monograma entra con un rebote y los chips de skills en
+// cascada, para que la tarjeta se lea por partes en lugar de aparecer entera.
+function animarExperiencia(conMovimiento) {
+  const tarjetas = gsap.utils.toArray('#experience .experience-card');
+  if (!tarjetas.length) return;
+
+  if (!conMovimiento) {
+    gsap.set('#experience .company-logo, #experience .skill-chip', {
+      autoAlpha: 1,
+      scale: 1,
+      y: 0,
+    });
+    return;
+  }
+
+  tarjetas.forEach((tarjeta) => {
+    const logo = tarjeta.querySelector('.company-logo');
+    const chips = tarjeta.querySelectorAll('.skill-chip');
+
+    const tl = gsap.timeline({
+      scrollTrigger: { trigger: tarjeta, start: 'top 82%', once: true },
+      // El hover se engancha al acabar la entrada: si se enganchara antes, su
+      // timeline partiría del estado inicial (logo a scale 0.4) en vez del
+      // final, y al invertirla el monograma se encogería.
+      onComplete: () => activarHoverExperiencia(tarjeta),
+    });
+
+    if (logo) {
+      tl.fromTo(
+        logo,
+        { autoAlpha: 0, scale: 0.4, rotate: -25 },
+        { autoAlpha: 1, scale: 1, rotate: 0, duration: 0.6, ease: 'back.out(2.2)' }
+      );
+    }
+
+    if (chips.length) {
+      tl.fromTo(
+        chips,
+        { autoAlpha: 0, y: 12, scale: 0.94 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.4,
+          stagger: 0.05,
+          ease: 'power2.out',
+          // Sin clearProps el scale inline se queda puesto y pelea con el
+          // transform del hover.
+          clearProps: 'scale',
+        },
+        logo ? '-=0.3' : 0
+      );
+    }
+
+    animacionesContenido.push(tl);
+  });
+}
+
+// Hover de una tarjeta de experiencia. Va en GSAP y no en CSS porque la
+// animación de entrada deja un transform inline en la tarjeta y en el
+// monograma, y ese inline gana sobre cualquier :hover de la hoja de estilos.
+function activarHoverExperiencia(tarjeta) {
+  const logo = tarjeta.querySelector('.company-logo');
+
+  const tl = gsap.timeline({ paused: true, defaults: { ease: 'power3.out' } });
+  tl.to(tarjeta, { y: -4, duration: 0.35 }, 0);
+  if (logo) {
+    tl.to(logo, { scale: 1.06, rotate: -3, duration: 0.4 }, 0);
+  }
+
+  tarjeta.addEventListener('mouseenter', () => tl.play());
+  tarjeta.addEventListener('mouseleave', () => tl.reverse());
+  tarjeta.addEventListener('focusin', () => tl.play());
+  tarjeta.addEventListener('focusout', () => tl.reverse());
+
+  animacionesContenido.push(tl);
+}
+
 // Entrada de la cabecera al cargar: retrato, textos y botones escalonados.
 function animarPortada(conMovimiento) {
   // project.html no tiene portada.
@@ -292,6 +370,7 @@ function construirAnimaciones() {
       animarTarjetas(conMovimiento);
       animarParallax(conMovimiento);
       animarIconos(conMovimiento);
+      animarExperiencia(conMovimiento);
       activarHoverTarjetas(conMovimiento);
     }
   );
@@ -317,19 +396,45 @@ function renderExperience() {
 
   experienceData.forEach(experience => {
     const detailsContainer = document.createElement('div');
-    detailsContainer.className = 'details-container';
+    detailsContainer.className = 'details-container experience-card';
+    if (experience.current) detailsContainer.classList.add('is-current');
 
-    // TITLE
+    // CABECERA: monograma de la empresa junto al puesto y las fechas, para que
+    // de un vistazo se distinga dónde y cuándo antes de leer la descripción.
+    const header = document.createElement('div');
+    header.className = 'experience-header';
+
+    const logo = typeof logoDeEmpresa === 'function' ? logoDeEmpresa(experience.logo) : null;
+    if (logo) header.appendChild(logo);
+
+    const headerText = document.createElement('div');
+    headerText.className = 'experience-heading';
+
     const title = document.createElement('h2');
     title.className = 'experience-sub-title';
     title.textContent = experience.title[lang];
-    detailsContainer.appendChild(title);
+    headerText.appendChild(title);
 
-    // COMPANY
-    const company = document.createElement('h3');
+    const meta = document.createElement('div');
+    meta.className = 'experience-meta';
+
+    const company = document.createElement('span');
     company.className = 'company';
     company.textContent = experience.company;
-    detailsContainer.appendChild(company);
+    meta.appendChild(company);
+
+    if (experience.period) {
+      const period = document.createElement('span');
+      period.className = 'experience-period';
+      period.textContent = experience.period[lang];
+      // El punto del puesto actual va dentro del periodo, donde se lee la fecha.
+      if (experience.current) period.classList.add('is-current');
+      meta.appendChild(period);
+    }
+
+    headerText.appendChild(meta);
+    header.appendChild(headerText);
+    detailsContainer.appendChild(header);
 
     // DESCRIPTION
     if (experience.description) {
@@ -339,26 +444,19 @@ function renderExperience() {
       detailsContainer.appendChild(desc);
     }
 
-    // SKILLS (estilos en .skill-list, en style.css)
+    // SKILLS: cada una con su propio icono (estilos en .skill-list).
     const articleContainer = document.createElement('div');
-    articleContainer.className = 'article-container skill-list';
+    articleContainer.className = 'skill-list';
 
     experience.skills.forEach(skill => {
-      const article = document.createElement('article');
-
-      const img = document.createElement('img');
-      img.src = 'assets/checkmark.png';
-      img.alt = 'Experience icon';
-      img.className = 'icon';
-
-      const div = document.createElement('div');
-      const skillName = document.createElement('h3');
-      skillName.textContent = skill;
-      div.appendChild(skillName);
-
-      article.appendChild(img);
-      article.appendChild(div);
-      articleContainer.appendChild(article);
+      const chip = document.createElement('span');
+      chip.className = 'skill-chip';
+      // iconoDeSkill devuelve SVG construido por nosotros a partir de una tabla
+      // fija, no de datos externos, así que no hay entrada de usuario aquí.
+      chip.innerHTML =
+        typeof iconoDeSkill === 'function' ? iconoDeSkill(skill) : '';
+      chip.appendChild(document.createTextNode(skill));
+      articleContainer.appendChild(chip);
     });
 
     detailsContainer.appendChild(articleContainer);

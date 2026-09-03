@@ -1,13 +1,33 @@
 // ============================================
 // EXPERIENCE DATA
 // ============================================
+// `period` se muestra en la cabecera de cada tarjeta; `current: true` marca el
+// puesto en curso con un punto animado. `logo` es la clave del SVG inline en
+// COMPANY_LOGOS (script.js), no una ruta a un archivo.
 const experienceData = [
+  {
+    title: {
+      en: "Fullstack Developer | AI & Automation",
+      es: "Desarrollador Fullstack | IA y Automatización"
+    },
+    company: "NTT DATA",
+    logo: "ntt",
+    period: { en: "2025 — Present", es: "2025 — Actualidad" },
+    current: true,
+    description: {
+      en: "Building software solutions and process automations for banking clients. I develop front-ends in React and cloud services on Azure and Google Cloud, and work on AI agents that automate internal workflows.",
+      es: "Desarrollo de soluciones software y automatizaciones de procesos para clientes del sector bancario. Construyo front-ends en React y servicios cloud sobre Azure y Google Cloud, y trabajo en agentes de IA que automatizan flujos internos."
+    },
+    skills: ["React", "Azure", "Google Cloud", "AI Agents", "Automation", "Git"]
+  },
   {
     title: {
       en: "Unity Developer | Netcode & Game Design Specialist",
       es: "Desarrollador Unity | Especialista en Netcode y Diseño de Juegos"
     },
     company: "GGTech Entertainment",
+    logo: "ggtech",
+    period: { en: "2024 — 2025", es: "2024 — 2025" },
     description: {
       en: "Developed multiplayer gameplay systems and optimized network features using Unity Netcode. Contributed to gameplay design, prototyping, and technical documentation.",
       es: "Desarrollé sistemas multijugador y optimicé funcionalidades de red usando Unity Netcode. Contribuí al diseño de gameplay, prototipado y documentación técnica."
@@ -20,6 +40,8 @@ const experienceData = [
       es: "Profesor de Programación"
     },
     company: "Coding Giants",
+    logo: "coding-giants",
+    period: { en: "2023 — 2024", es: "2023 — 2024" },
     description: {
       en: "Taught programming and game development to students of different ages, focusing on creativity, logic, and teamwork through Unity, C#, and Scratch-based projects.",
       es: "Enseñé programación y desarrollo de videojuegos a estudiantes de distintas edades, fomentando la creatividad, la lógica y el trabajo en equipo mediante proyectos con Unity, C# y Scratch."
@@ -32,18 +54,22 @@ const experienceData = [
       es: "Desarrollador Web"
     },
     company: "Juanita.es",
+    logo: "juanita",
+    period: { en: "2023", es: "2023" },
     description: {
       en: "Designed and implemented responsive interfaces using modern web technologies. Collaborated with backend developers to deliver smooth and accessible user experiences.",
       es: "Diseñé e implementé interfaces responsivas utilizando tecnologías web modernas. Colaboré con desarrolladores backend para ofrecer experiencias de usuario fluidas y accesibles."
     },
     skills: ["HTML", "CSS", "JavaScript", "Web Design", "eCommerce", "Prestashop"]
-  },  
+  },
   {
     title: {
       en: "Graphic Software Engineer",
       es: "Ingeniero de Software Gráfico"
     },
     company: "Icy Beak Studios",
+    logo: "icy-beak",
+    period: { en: "2022 — 2023", es: "2022 — 2023" },
     description: {
       en: "Worked on the technical side of game development with a focus on rendering, engine architecture, and tools. Built graphics pipelines in OpenGL and supported art and design teams through custom tech solutions.",
       es: "Trabajé en el apartado técnico del desarrollo de videojuegos, centrado en renderizado, arquitectura de motor y herramientas. Construí pipelines gráficos en OpenGL y apoyé a los equipos de arte y diseño con soluciones técnicas personalizadas."

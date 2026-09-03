@@ -229,7 +229,8 @@ section {
 #profile {
   display: flex;
   justify-content: center;
-  gap: 5rem;
+  align-items: center;
+  gap: 3rem;
   height: 90vh;
 }
 
@@ -238,6 +239,18 @@ section {
   height: 400px;
   width: 400px;
   margin: auto 0;
+}
+
+/* La ilustración de portada es la pieza más grande de la página: se agranda
+   bastante respecto al tamaño genérico de .section__pic-container. Solo por
+   encima de 1200px: por debajo, mediaqueries.css pasa #profile a columna y
+   fija su propio tamaño de imagen, y esta regla (más específica) lo pisaría. */
+@media screen and (min-width: 1201px) {
+  #profile .section__pic-container {
+    flex: none;
+    height: clamp(400px, 46vw, 620px);
+    width: clamp(400px, 46vw, 620px);
+  }
 }
 
 /* La ilustración de la portada trae el fondo blanco incrustado en el PNG (su
@@ -532,6 +545,132 @@ section {
   margin-bottom: 0.35rem;
 }
 
+/* Cabecera de cada experiencia: monograma a la izquierda, puesto y datos a la
+   derecha. Alineada a la izquierda porque .details-container centra por
+   defecto y aquí hay que poder escanear la columna de arriba abajo. */
+.experience-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  text-align: left;
+  margin-bottom: 0.9rem;
+}
+
+.experience-heading {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Monograma de la empresa. No es el logotipo oficial (son marcas registradas):
+   son las iniciales sobre el color corporativo aproximado, suficiente para
+   diferenciar las tarjetas de un vistazo. */
+.company-logo {
+  flex: none;
+  width: 3rem;
+  height: 3rem;
+  display: grid;
+  place-items: center;
+  border-radius: 0.9rem;
+  font-family: "Archivo Black", "Archivo", sans-serif;
+  font-size: 1.05rem;
+  letter-spacing: -0.02em;
+  color: #fff;
+  background-color: var(--tinte-marca, var(--tinta));
+  /* El tinte de marca es un color saturado dentro de una paleta crema; bajarle
+     un punto la saturación lo integra sin perder identidad. */
+  filter: saturate(0.88);
+  /* Igual que la tarjeta: el transform del hover lo lleva GSAP, que ya escribe
+     uno inline al animar la entrada del monograma. Aquí solo la sombra. */
+  transition: box-shadow 320ms ease;
+}
+
+.experience-card:hover .company-logo {
+  box-shadow: 0 10px 22px -12px rgba(46, 40, 34, 0.5);
+}
+
+/* Empresa y periodo en una línea; en pantallas estrechas el periodo baja. */
+.experience-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.75rem;
+}
+
+.company {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--tinta);
+  /* Anula el margin-bottom: 15px que traía como <h3>; ahora es un <span> en
+     una fila flex y el espaciado lo pone el gap. */
+  margin-bottom: 0;
+}
+
+.experience-period {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--tinta-suave);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Punto que late en el puesto actual. Se dibuja con ::before para no meter un
+   elemento vacío en el DOM solo por decoración. */
+.experience-period.is-current::before {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background-color: #1f8a5b;
+  box-shadow: 0 0 0 0 rgba(31, 138, 91, 0.55);
+  animation: latido 2.4s ease-out infinite;
+}
+
+@keyframes latido {
+  0% {
+    box-shadow: 0 0 0 0 rgba(31, 138, 91, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 0.5rem rgba(31, 138, 91, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(31, 138, 91, 0);
+  }
+}
+
+/* Quien pide menos movimiento no necesita un punto latiendo en bucle. */
+@media (prefers-reduced-motion: reduce) {
+  .experience-period.is-current::before {
+    animation: none;
+  }
+}
+
+/* El puesto en curso se distingue con una barra en el borde izquierdo. */
+.experience-card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  /* Sin transform en la transición: la elevación al pasar el cursor la anima
+     GSAP, porque el transform inline que deja la animación de entrada gana
+     sobre cualquier :hover del CSS. */
+  transition: border-color 320ms ease, box-shadow 320ms ease;
+}
+
+.experience-card.is-current::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0.28rem;
+  background: linear-gradient(to bottom, #1f8a5b, #2fae74);
+}
+
+.experience-card:hover {
+  border-color: var(--arena-2);
+  box-shadow: 0 18px 40px -24px rgba(46, 40, 34, 0.35);
+}
+
 .experience-details-container {
   display: flex;
   justify-content: center;
@@ -607,25 +746,65 @@ article .icon {
   white-space: nowrap;
 }
 
-/* Habilidades de cada experiencia: rejilla en dos columnas en lugar de
-   artículos de 10rem fijos, que dejaban huecos irregulares. */
+/* Habilidades de cada experiencia. Antes era una rejilla de columnas fijas con
+   el mismo checkmark repetido en cada fila; ahora cada una es un chip con su
+   propio icono, así que se ajustan al ancho del texto y se distinguen entre sí
+   de un vistazo. */
 .skill-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
-  gap: 0.5rem 1rem;
-  text-align: left;
-}
-
-.skill-list article {
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
   gap: 0.5rem;
-  font-size: 1rem;
+  text-align: left;
+  margin-top: auto;
+  padding-top: 0.25rem;
 }
 
-.skill-list h3 {
-  font-size: 1rem;
-  font-weight: 500;
+.skill-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.8rem 0.4rem 0.6rem;
+  background-color: var(--crema-2);
+  border: 1px solid var(--linea);
+  border-radius: 2rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--tinta-media);
+  white-space: nowrap;
+  transition: transform 260ms cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 260ms ease, border-color 260ms ease, color 260ms ease;
+}
+
+.skill-icon {
+  width: 1.15rem;
+  height: 1.15rem;
+  flex: none;
+  /* Hereda el color del chip vía currentColor, así el hover tiñe icono y texto
+     a la vez sin declararlo dos veces. */
+  color: inherit;
+  opacity: 0.85;
+}
+
+/* Al pasar por la tarjeta, los chips se marcan en bloque: da la sensación de
+   que la tarjeta entera responde, no solo el elemento bajo el cursor. */
+.experience-card:hover .skill-chip {
+  background-color: var(--arena);
+  border-color: var(--arena-2);
+  color: var(--tinta);
+}
+
+/* Y el que está justo debajo del cursor se marca en oscuro. Va calificado con
+   .experience-card porque la regla de arriba (.experience-card:hover
+   .skill-chip) tiene la misma especificidad y la anularía por orden. */
+.experience-card .skill-chip:hover {
+  transform: translateY(-2px);
+  background-color: var(--tinta);
+  border-color: var(--tinta);
+  color: var(--crema);
+}
+
+.skill-chip:hover .skill-icon {
+  opacity: 1;
 }
 
 .project-btn {
