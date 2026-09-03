@@ -14,7 +14,9 @@ body {
 html {
   scroll-behavior: smooth;
 }
-
+h1{
+  margin-bottom: 20px;
+}
 p {
   color: rgb(85, 85, 85);
 }
@@ -150,7 +152,7 @@ a:hover {
 
 section {
   padding-top: 4vh;
-  height: 96vh;
+  height: 85vh;
   margin: 0 10rem;
   box-sizing: border-box;
   min-height: fit-content;
@@ -166,7 +168,7 @@ section {
   display: flex;
   justify-content: center;
   gap: 5rem;
-  height: 80vh;
+  height: 90vh;
 }
 
 .section__pic-container {
@@ -300,12 +302,12 @@ section {
   border-radius: 2rem;
   border: rgb(53, 53, 53) 0.1rem solid;
   border-color: rgb(163, 163, 163);
+  max-width: 60rem;
   text-align: center;
 }
 
 .section-container {
   gap: 4rem;
-  height: 80%;
 }
 
 .section__pic-container {
@@ -457,4 +459,23 @@ footer p {
   .contact-info-container{
     justify-content: left;
   }
+}
+
+.project-img {
+  max-width: 45rem;
+}
+#article{
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centrar horizontalmente */
+  align-items: center; /* Centrar verticalmente */
+  text-align: center; /* Alinear el texto */
+  height: 100%; /* Ajusta según el contenido */
+}
+.article-description{
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+.details-container.color-container {
+  cursor: pointer;
 }
