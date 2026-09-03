@@ -147,6 +147,20 @@ const gameProjectData  = [
 const webProjectData = [
   {
     title: {
+      en: "Cool Party Games (Realtime Multiplayer Portal)",
+      es: "Cool Party Games (Portal Multijugador en Tiempo Real)"
+    },
+    imgSrc: "assets/cool-party-games.png",
+    imgAlt: "Cool Party Games multiplayer minigame portal",
+    description: {
+      en: "A portal of realtime party minigames playable straight from the browser, with no sign-up: pick a nickname and an avatar, create a room and share a four-letter code. The netcode runs on Cloudflare Durable Objects, where every room is its own authoritative instance with its own state, its own hibernating WebSockets and its own alarms driving the game loop. The server never broadcasts the raw state: each game exposes a per-player view, which is what keeps the impostor from reading the secret word straight out of devtools. Countdowns are rendered client-side against a clock synced through ping round-trips, while expiry is always decided server-side. Players keep their seat, role and score for 60 seconds after a dropped connection, and the host migrates automatically. Games plug into a shared contract of pure functions, so the same logic runs on the server, in the browser sandbox and in the tests. Ships with The Impostor (word clues plus voting) and Draw & Guess (streamed strokes at 45ms batches).",
+      es: "Portal de minijuegos multijugador en tiempo real para jugar desde el navegador, sin registro: eliges nombre y avatar, creas una sala y compartes un código de cuatro letras. El netcode corre sobre Cloudflare Durable Objects, donde cada sala es una instancia autoritativa con su propio estado, sus WebSockets con hibernación y sus alarmas moviendo el gameloop. El servidor nunca difunde el estado en crudo: cada juego expone una vista por jugador, que es lo que impide que el impostor lea la palabra secreta desde las devtools. Las cuentas atrás se pintan en cliente contra un reloj sincronizado con los pings, pero el vencimiento lo decide siempre el servidor. Al caerse la conexión se conservan asiento, rol y puntos durante 60 segundos, y el host migra solo. Los juegos se enchufan a un contrato de funciones puras, así que la misma lógica corre en el servidor, en el sandbox del navegador y en los tests. Incluye El Impostor (pistas por turnos y votación) y Dibuja y Adivina (trazos en streaming por lotes de 45 ms)."
+    },
+    liveDemoLink: "https://cool-party-games.vercel.app",
+    tags: ["React", "TypeScript", "WebSockets", "Cloudflare Durable Objects", "Netcode", "Realtime", "Vercel", "UX/UI"]
+  },
+  {
+    title: {
       en: "Cinema Listings with Live Ratings",
       es: "Cartelera de Cine con Puntuaciones"
     },
