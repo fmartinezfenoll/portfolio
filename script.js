@@ -187,17 +187,37 @@ function activarHoverTarjetas(conMovimiento) {
     .toArray('#web-proyects .details-container, #game-proyects .details-container')
     .forEach((tarjeta) => {
       const img = tarjeta.querySelector('.project-img');
+      const titulo = tarjeta.querySelector('.project-title');
 
-      tarjeta.addEventListener('mouseenter', () => {
-        gsap.to(tarjeta, { y: -8, duration: 0.4, ease: 'power3.out' });
-        if (img) gsap.to(img, { scale: 1.06, duration: 0.7, ease: 'power2.out' });
-      });
+      // Una sola timeline pausada por tarjeta, en lugar de crear tweens en cada
+      // mouseenter: al invertirla, la salida deshace exactamente la entrada.
+      const tl = gsap.timeline({ paused: true, defaults: { ease: 'power3.out' } });
 
-      tarjeta.addEventListener('mouseleave', () => {
-        gsap.to(tarjeta, { y: 0, duration: 0.5, ease: 'power3.out' });
-        if (img) gsap.to(img, { scale: 1, duration: 0.7, ease: 'power2.out' });
-      });
+      tl.to(tarjeta, { y: -8, duration: 0.4 }, 0);
+      if (img) tl.to(img, { scale: 1.06, duration: 0.65, ease: 'power2.out' }, 0);
+      if (titulo) tl.to(titulo, { x: 4, duration: 0.4 }, 0);
+
+      tarjeta.addEventListener('mouseenter', () => tl.play());
+      tarjeta.addEventListener('mouseleave', () => tl.reverse());
+      // El foco por teclado recibe el mismo tratamiento que el ratón.
+      tarjeta.addEventListener('focusin', () => tl.play());
+      tarjeta.addEventListener('focusout', () => tl.reverse());
     });
+}
+
+// Los iconos sociales y la flecha los animó antes GSAP en la entrada, así que
+// su transform inline gana sobre cualquier :hover del CSS. Se animan aquí.
+function activarHoverIconos(conMovimiento) {
+  if (!conMovimiento) return;
+
+  gsap.utils.toArray('#socials-container .icon').forEach((icono) => {
+    const tl = gsap
+      .timeline({ paused: true })
+      .to(icono, { y: -5, scale: 1.12, duration: 0.35, ease: 'back.out(2.5)' });
+
+    icono.addEventListener('mouseenter', () => tl.play());
+    icono.addEventListener('mouseleave', () => tl.reverse());
+  });
 }
 
 // Iconos de "Sobre mí" y "Experiencia": entran con un pequeño rebote cuando la
@@ -246,7 +266,17 @@ function animarPortada(conMovimiento) {
     .fromTo('#profile .btn',
       { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.45, stagger: 0.08 }, '-=0.3')
     .fromTo('#socials-container .icon',
-      { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.07 }, '-=0.25');
+      { autoAlpha: 0, y: 12 },
+      {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.4,
+        stagger: 0.07,
+        // El hover se engancha al acabar la entrada, para que su timeline
+        // parta del estado final y no del que dejó la animación de entrada.
+        onComplete: () => activarHoverIconos(true),
+      },
+      '-=0.25');
 }
 
 // Se llama al arrancar y cada vez que se repintan los proyectos.
@@ -309,16 +339,13 @@ function renderExperience() {
       detailsContainer.appendChild(desc);
     }
 
-    // SKILLS
+    // SKILLS (estilos en .skill-list, en style.css)
     const articleContainer = document.createElement('div');
-    articleContainer.className = 'article-container';
-    articleContainer.style.justifyContent = 'center';
+    articleContainer.className = 'article-container skill-list';
 
     experience.skills.forEach(skill => {
       const article = document.createElement('article');
-      article.style.justifyContent = 'flex-start';
-      article.style.width = '10rem';
-      
+
       const img = document.createElement('img');
       img.src = 'assets/checkmark.png';
       img.alt = 'Experience icon';
@@ -376,25 +403,15 @@ function renderProjectsToContainer(projectsArray, containerId, categoryPrefix) {
     desc.className = 'project-description';
     desc.textContent = project.description[lang];
 
-    // TAGS
+    // TAGS (estilos en .tag-list / .tag, en style.css)
     const tagsContainer = document.createElement('div');
-    tagsContainer.style.display = 'flex';
-    tagsContainer.style.flexWrap = 'wrap';
-    tagsContainer.style.gap = '0.5rem';
-    tagsContainer.style.justifyContent = 'center';
-    tagsContainer.style.marginBottom = '1rem';
+    tagsContainer.className = 'tag-list';
 
     if (project.tags && project.tags.length > 0) {
       project.tags.forEach(tag => {
         const tagElement = document.createElement('span');
+        tagElement.className = 'tag';
         tagElement.textContent = tag;
-        tagElement.style.padding = '0.3rem 0.8rem';
-        tagElement.style.backgroundColor = '#f0f0f0';
-        tagElement.style.border = '1px solid rgb(163, 163, 163)';
-        tagElement.style.borderRadius = '1rem';
-        tagElement.style.fontSize = '0.9rem';
-        tagElement.style.color = 'rgb(85, 85, 85)';
-        tagElement.style.fontWeight = '500';
         tagsContainer.appendChild(tagElement);
       });
     }
