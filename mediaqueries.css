@@ -6,10 +6,6 @@
   .about-containers {
     flex-wrap: wrap;
   }
-  #contact,
-  #projects {
-    height: fit-content;
-  }
 }
 
 @media screen and (max-width: 1200px) {
@@ -30,12 +26,12 @@
   .arrow {
     display: none;
   }
-  section,
   .section-container {
     height: fit-content;
   }
   section {
     margin: 0 5%;
+    min-height: 0;
   }
   .section__pic-container {
     width: 275px;

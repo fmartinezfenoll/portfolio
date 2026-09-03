@@ -71,15 +71,16 @@ function setLanguage(lang) {
 // ============================================
 // INTERSECTION OBSERVER FOR SCROLL ANIMATIONS
 // ============================================
+// La animación de entrada ocurre una sola vez por sección: se añade 'show' al
+// aparecer y no se quita nunca. Antes se retiraba al salir de pantalla, así que
+// al volver a subir el contenido desaparecía y entraba de nuevo desde la
+// izquierda. Se sigue observando (sin unobserve) para que las secciones que un
+// salto de scroll rápido se salta acaben marcándose igualmente.
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('show');
-    } else {
-      entry.target.classList.remove('show');
-    }
+    if (entry.isIntersecting) entry.target.classList.add('show');
   });
-});
+}, { threshold: 0, rootMargin: '0px 0px -10% 0px' });
 
 const hiddenElements = document.querySelectorAll('.hidden');
 hiddenElements.forEach((el) => observer.observe(el));

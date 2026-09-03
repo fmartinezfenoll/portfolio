@@ -121,6 +121,20 @@ const gameProjectData  = [
 const webProjectData = [
   {
     title: {
+      en: "Cinema Listings with Live Ratings",
+      es: "Cartelera de Cine con Puntuaciones"
+    },
+    imgSrc: "assets/cartelera.png",
+    imgAlt: "Cinema listings web app with movie ratings",
+    description: {
+      en: "Web app showing today's showtimes for a local cinema with each film's rating. A serverless function fetches the listings from the cinema's internal API, queries TMDB for ratings and caches the result in blob storage, limited to one refresh per day. Interface animated with GSAP and ScrollTrigger: staggered card entrances, animated score gauges and expandable detail panels. Runs entirely on free tiers.",
+      es: "Aplicación web que muestra los horarios de hoy de un cine local con la puntuación de cada película. Una función serverless descarga la cartelera de la API interna del cine, consulta las puntuaciones en TMDB y guarda el resultado en blob storage, limitado a una actualización al día. Interfaz animada con GSAP y ScrollTrigger: entrada escalonada de tarjetas, medidores de puntuación animados y panel de detalle desplegable. Funciona íntegramente en planes gratuitos."
+    },
+    liveDemoLink: "https://films-reviewer.vercel.app",
+    tags: ["JavaScript", "GSAP", "Serverless", "REST API", "Vercel", "Frontend", "UX/UI"]
+  },
+  {
+    title: {
       en: "Web Developer - Juanita.es",
       es: "Desarrollador Web - Juanita.es"
     },

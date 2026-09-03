@@ -150,12 +150,14 @@ a:hover {
 
 /* SECTIONS */
 
+/* Altura guiada por el contenido: con height fijo, las secciones cortas
+   dejaban un hueco enorme y las largas dependían de min-height para no
+   recortarse. */
 section {
-  padding-top: 4vh;
-  height: 85vh;
+  padding: 6vh 0;
+  min-height: 85vh;
   margin: 0 10rem;
   box-sizing: border-box;
-  min-height: fit-content;
 }
 
 .section-container {
