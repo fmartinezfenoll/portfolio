@@ -9,22 +9,22 @@ const experienceData = [
     skills: ["Unity", "Netcode", "Design", "Git / Asana", "QA / TDD"]
   },
   {
-    title: "Graphic Software Engineer",
-    company: "Icy Beak Studios",
-    description: "Worked on the technical side of game development with a focus on rendering, engine architecture, and tools. Built graphics pipelines in OpenGL and supported art and design teams through custom tech solutions.",
-    skills: ["OpenGL", "Unreal", "Unity", "Tech Art", "Git / Asana"]
-  },
-  {
     title: "Professor",
     company: "Coding Giants",
     description: "Taught programming and game development to students of different ages, focusing on creativity, logic, and teamwork through Unity, C#, and Scratch-based projects.",
     skills: ["Unity", "C#", "Scratch", "Design", "Teaching"]
   },
   {
-    title: "Frontend Developer",
+    title: "Web Developer",
     company: "Juanita.es",
     description: "Designed and implemented responsive interfaces using modern web technologies. Collaborated with backend developers to deliver smooth and accessible user experiences.",
-    skills: ["HTML", "CSS", "JavaScript", "Web Design", "eCommerce"]
+    skills: ["HTML", "CSS", "JavaScript", "Web Design", "eCommerce", "Prestashop"]
+  },  
+  {
+    title: "Graphic Software Engineer",
+    company: "Icy Beak Studios",
+    description: "Worked on the technical side of game development with a focus on rendering, engine architecture, and tools. Built graphics pipelines in OpenGL and supported art and design teams through custom tech solutions.",
+    skills: ["OpenGL", "Unreal", "Unity", "Tech Art", "Git / Asana"]
   }
 ];
 
@@ -32,7 +32,7 @@ const experienceData = [
 // ============================================
 // PROJECT DATA
 // ============================================
-const projectData = [
+const gameProjectData  = [
   {
     title: "Crimanimals (Steam Release)",
     imgSrc: "assets/crimanimals.png",
@@ -65,14 +65,55 @@ const projectData = [
     description: "A space shooter game created for the Game Boy in assembly language. Developed for the GB Retro Dev Game Jam 2024, created entirely from scratch, this retro-style game showcases low-level programming skills and authentic Game Boy hardware constraints. Navigate through space, shoot enemies, and experience classic 8-bit gaming.",
     liveDemoLink: "https://itch.io/jam/gbretrodev24/rate/3055980",
     tags: ["Assembly", "Game Boy", "Retro", "Game Jam"]
+  }
+];
+
+// ============================================
+// WEB PROJECTS
+// ============================================
+const webProjectData = [
+  {
+  title: "Web Developer - Juanita.es",
+  imgSrc: "assets/juanita.png",
+  imgAlt: "Juanita workwear e-commerce website",
+  description: "Designed and developed a responsive e-commerce website for a workwear clothing store (Juanita.es). Built modern, accessible user interfaces and collaborated with backend developers to ensure a smooth shopping experience across devices.",
+  liveDemoLink: "https://juanita.es",
+  tags: ["HTML", "CSS", "JavaScript", "Responsive Design", "E-commerce", "Frontend", "UX/UI"]
+  },
+  {
+    title: "Portfolio Website",
+    imgSrc: "assets/web-project-1.png",
+    imgAlt: "Portfolio Website",
+    description: "A modern and responsive portfolio website built with HTML, CSS, and JavaScript. Features smooth animations, a responsive design, and dynamic content loading.",
+    liveDemoLink: "#",
+    tags: ["HTML", "CSS", "JavaScript", "Responsive"]
   },
   {
     title: "Multiplayer online pong",
     imgSrc: "assets/project-1.png",
     imgAlt: "Multiplayer online pong",
     description: "Videogame made with html, css and javascript, where you can play multiplayer online.",
-    liveDemoLink: "https://github.com/fmartinezfenoll/pong",
+    liveDemoLink: "https://docs.google.com/document/d/1n7xl82x_yLRNmv_p4AzOzH6f-xm9OidEkv-_yU-kQ-8/edit?usp=sharing",
     tags: ["HTML", "CSS", "JavaScript", "Multiplayer Online"]
+  },
+  {
+  title: "ToDo App (MEAN Stack)",
+  imgSrc: "assets/todo-app.png",
+  imgAlt: "ToDo App Angular MEAN",
+  description: "Task management web application built with Angular 17 and a RESTful API using the MEAN stack (MongoDB, Express, Angular, Node.js). Supports full CRUD operations and real-time updates during development.",
+  liveDemoLink: "https://docs.google.com/document/d/1jVhGG4lFFmRiKjp4BEh_vbC1nMDNklpaD5OUzEvCcps/edit?usp=sharing",
+  tags: ["Angular", "MongoDB", "Express", "Node.js", "MEAN", "CRUD", "REST API"]
+  },
+  {
+  title: "WS Auth (Node.js + JWT + Bcrypt)",
+  imgSrc: "assets/ws-auth.png",
+  imgAlt: "Web Service Authentication Node JWT",
+  description: "Authentication web service built with Node.js implementing secure password hashing with bcrypt and token-based authentication using JWT. Includes helpers for password encryption/comparison and token creation/validation with expiration handling, along with testing scripts.",
+  liveDemoLink: "https://docs.google.com/document/d/1ugzvSc7HAbHavE2CEQ2uVf1uGzSm2ffzLW6g4FkLLPk/edit?usp=sharing",
+  tags: ["Node.js", "JWT", "Bcrypt", "Authentication", "REST API", "Security", "MEAN"]
   }
-
+  // Add more web projects here
 ];
+
+// Mantener compatibilidad con código existente
+const projectData = [...gameProjectData, ...webProjectData];

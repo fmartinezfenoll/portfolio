@@ -34,27 +34,22 @@ function renderExperience() {
   const aboutContainers = experienceSection.querySelector('.about-containers');
   if (!aboutContainers) return;
 
-  // Clear existing content
   aboutContainers.innerHTML = '';
 
-  // Generate HTML for each experience
   experienceData.forEach(experience => {
     const detailsContainer = document.createElement('div');
     detailsContainer.className = 'details-container';
 
-    // ✅ Create title (on top)
     const title = document.createElement('h2');
     title.className = 'experience-sub-title';
     title.textContent = experience.title;
     detailsContainer.appendChild(title);
 
-    // ✅ Create company (below title)
     const company = document.createElement('h3');
     company.className = 'company';
     company.textContent = experience.company;
     detailsContainer.appendChild(company);
 
-    // ✅ Description (optional)
     if (experience.description) {
       const desc = document.createElement('p');
       desc.className = 'experience-description';
@@ -62,7 +57,6 @@ function renderExperience() {
       detailsContainer.appendChild(desc);
     }
 
-    // ✅ Create skills container
     const articleContainer = document.createElement('div');
     articleContainer.className = 'article-container';
     articleContainer.style.justifyContent = 'center';
@@ -87,32 +81,25 @@ function renderExperience() {
       articleContainer.appendChild(article);
     });
 
-    // ✅ Append skills at the end
     detailsContainer.appendChild(articleContainer);
-
-    // ✅ Add full card to the page
     aboutContainers.appendChild(detailsContainer);
   });
 }
 
-
 // ============================================
-// RENDER PROJECTS SECTION
+// RENDER PROJECTS (GENERIC FUNCTION)
 // ============================================
-function renderProjects() {
-  const projectsContainer = document.getElementById('proyects');
+function renderProjectsToContainer(projectsArray, containerId, categoryPrefix) {
+  const projectsContainer = document.getElementById(containerId);
   if (!projectsContainer) return;
 
-  // Clear existing content
   projectsContainer.innerHTML = '';
 
-  // Generate HTML for each project
-  projectData.forEach((project, index) => {
+  projectsArray.forEach((project, index) => {
     const projectCard = document.createElement('div');
     projectCard.className = 'details-container color-container';
     projectCard.style.cursor = 'pointer';
 
-    // Project image container
     const imgContainer = document.createElement('div');
     imgContainer.className = 'article-container';
 
@@ -123,12 +110,10 @@ function renderProjects() {
 
     imgContainer.appendChild(img);
 
-    // Project title
     const title = document.createElement('h2');
     title.className = 'experience-sub-title project-title';
     title.textContent = project.title;
 
-    // Tags container (if project has tags)
     if (project.tags && project.tags.length > 0) {
       const tagsContainer = document.createElement('div');
       tagsContainer.style.display = 'flex';
@@ -137,7 +122,6 @@ function renderProjects() {
       tagsContainer.style.justifyContent = 'center';
       tagsContainer.style.marginBottom = '1rem';
 
-      // Create tag elements
       project.tags.forEach(tag => {
         const tagElement = document.createElement('span');
         tagElement.textContent = tag;
@@ -159,7 +143,6 @@ function renderProjects() {
       projectCard.appendChild(title);
     }
 
-    // Buttons container
     const btnContainer = document.createElement('div');
     btnContainer.className = 'btn-container';
 
@@ -174,9 +157,9 @@ function renderProjects() {
     btnContainer.appendChild(btn);
     projectCard.appendChild(btnContainer);
 
-    // Add click handler to entire card
+    // Add click handler with category prefix
     projectCard.onclick = () => {
-      window.location.href = `project.html?id=${index}`;
+      window.location.href = `project.html?category=${categoryPrefix}&id=${index}`;
     };
 
     projectsContainer.appendChild(projectCard);
@@ -184,15 +167,37 @@ function renderProjects() {
 }
 
 // ============================================
+// RENDER GAME PROJECTS
+// ============================================
+function renderGameProjects() {
+  renderProjectsToContainer(gameProjectData, 'game-proyects', 'game');
+}
+
+// ============================================
+// RENDER WEB PROJECTS
+// ============================================
+function renderWebProjects() {
+  renderProjectsToContainer(webProjectData, 'web-proyects', 'web');
+}
+
+// ============================================
 // RENDER PROJECT DETAIL PAGE
 // ============================================
 function renderProjectDetail() {
   const urlParams = new URLSearchParams(window.location.search);
+  const category = urlParams.get("category");
   const projectId = parseInt(urlParams.get("id"), 10);
 
-  if (!isNaN(projectId) && projectId >= 0 && projectId < projectData.length) {
-    const project = projectData[projectId];
+  let project = null;
+  
+  // Determine which array to use based on category
+  if (category === 'game' && !isNaN(projectId) && projectId >= 0 && projectId < gameProjectData.length) {
+    project = gameProjectData[projectId];
+  } else if (category === 'web' && !isNaN(projectId) && projectId >= 0 && projectId < webProjectData.length) {
+    project = webProjectData[projectId];
+  }
 
+  if (project) {
     const titleElement = document.querySelector(".title");
     const imgElement = document.querySelector(".project-img");
     const descriptionElement = document.querySelector(".article-description");
@@ -208,7 +213,6 @@ function renderProjectDetail() {
       liveDemoButton.setAttribute("onclick", `location.href='${project.liveDemoLink}'`);
     }
 
-    // Add tags to detail page if there's a container for them
     const tagsContainer = document.querySelector(".project-tags");
     if (tagsContainer && project.tags) {
       tagsContainer.innerHTML = '';
@@ -234,7 +238,7 @@ function renderProjectDetail() {
   } else {
     const articleSection = document.getElementById("article");
     if (articleSection) {
-      articleSection.innerHTML = "<p>Project not found. Please provide a valid ID in the URL.</p>";
+      articleSection.innerHTML = "<p>Project not found. Please provide a valid category and ID in the URL.</p>";
     }
   }
 }
@@ -243,17 +247,18 @@ function renderProjectDetail() {
 // INITIALIZE ON PAGE LOAD
 // ============================================
 document.addEventListener('DOMContentLoaded', () => {
-  // Render experience section if it exists
   if (document.getElementById('experience')) {
     renderExperience();
   }
 
-  // Render projects section if it exists
-  if (document.getElementById('proyects')) {
-    renderProjects();
+  if (document.getElementById('game-proyects')) {
+    renderGameProjects();
   }
 
-  // Render project detail page if it exists
+  if (document.getElementById('web-proyects')) {
+    renderWebProjects();
+  }
+
   if (document.getElementById('article')) {
     renderProjectDetail();
   }
