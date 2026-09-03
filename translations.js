@@ -70,7 +70,7 @@ In addition, I enjoy sharing knowledge as a freelance programming instructor, he
       title: "Sobre mí",
       experience: "Experiencia",
       education: "Educación",
-      years: "Más de 4 años <br />Desarrollador de Software",
+      years: "Más de 2 años <br />Desarrollador de Software",
       degree: "Grado en Ingeniería Multimedia<br />Universidad de Alicante",
       text: `Soy desarrollador de videojuegos e ingeniero de software, apasionado por crear experiencias interactivas tanto en juegos como en aplicaciones web, combinando una sólida base técnica con un diseño cuidado.
 
