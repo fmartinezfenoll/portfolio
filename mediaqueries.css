@@ -38,6 +38,12 @@
     height: 275px;
     margin: 0 auto 2rem;
   }
+  /* La ilustración de portada se queda bastante más grande que el tamaño
+     genérico de arriba, que usan también "Sobre mí" y otras secciones. */
+  #profile .section__pic-container {
+    width: min(85vw, 520px);
+    height: min(85vw, 520px);
+  }
   .about-containers {
     margin-top: 0;
   }
@@ -86,6 +92,10 @@
     width: auto;
     height: 46vw;
     justify-content: center;
+  }
+  #profile .section__pic-container {
+    width: auto;
+    height: 66vw;
   }
   .section__text__p2 {
     font-size: 1.25rem;
