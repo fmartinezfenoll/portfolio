@@ -479,3 +479,9 @@ footer p {
 .details-container.color-container {
   cursor: pointer;
 }
+.experience-description {
+  color: rgb(85, 85, 85);
+  font-size: 0.95rem;
+  margin: 0.5rem 0 1rem;
+  line-height: 1.4;
+}
