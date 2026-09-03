@@ -3,24 +3,28 @@
 /* Misma familia que los mini-proyectos alojados, para que el portfolio y lo
    que enlaza se lean como un mismo sistema. */
 @import url("https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Archivo+Black&display=swap");
-/* Paleta crema. Los tres tonos base vienen del encargo (EFE9E3, D9CFC7,
-   C9B59C); el resto son un marrón oscuro para el texto y sus grises cálidos,
-   para que ningún gris quede azulado sobre el fondo crema. */
+/* Paleta crema sobre el fondo E1DCC9. Los tonos de superficie y de borde se
+   derivan de él para que compartan el mismo matiz, y el marrón 412D15 hace de
+   contraste; los intermedios salen de aclararlo, así ningún gris tira a azul.
+   Los contrastes de todos los pares en uso están comprobados contra WCAG AA
+   (4.5:1 para texto normal). */
 :root {
-  --crema: #efe9e3;
-  --crema-2: #e6ded6;
-  --arena: #d9cfc7;
-  --arena-2: #c9b59c;
+  --crema: #e1dcc9;
+  --crema-2: #d8d2bd;
+  --arena: #d3cdb8;
+  --arena-2: #c0b79c;
 
-  /* Marrón de contraste; los dos tonos medios salen de aclararlo, así todo el
-     texto comparte el mismo matiz cálido en lugar de tirar a gris. */
+  /* Dentro de una gama tan cerrada, el relleno del panel no llega a separarse
+     del fondo (el máximo alcanzable es ~1.3:1), así que la silueta de las
+     tarjetas la marca el borde --linea, más oscuro que ambos. */
+  --panel: #faf8f2;
+
   --tinta: #412d15;
   --tinta-media: #6b5334;
-  /* Se usa en el antetítulo, que es texto pequeño: a #96795a se quedaba en
-     3.37:1 y no llegaba al 4.5 que pide WCAG AA. */
-  --tinta-suave: #7d6342;
-  --linea: #cfc4b8;
-  --panel: #f7f3ef;
+  /* Se usa en el antetítulo, que es texto pequeño: sobre este fondo #7d6342
+     se quedaba en 4.09:1, por debajo del 4.5 que pide WCAG AA. */
+  --tinta-suave: #6f5638;
+  --linea: #b5ac91;
 }
 
 * {
