@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const btnElement = document.createElement("button");
     btnElement.classList.add("btn", "btn-color-2", "project-btn");
-    btnElement.textContent = "Live Demo";
+    btnElement.textContent = "Official Page";
     
     // Add the onclick to the button to prevent event propagation
     btnElement.onclick = (event) => {
