@@ -1,0 +1,8 @@
+node_modules/
+.DS_Store
+Thumbs.db
+
+# Skills de agentes instaladas en local (no forman parte del sitio)
+.agents/
+.claude/
+skills-lock.json

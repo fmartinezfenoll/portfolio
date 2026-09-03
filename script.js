@@ -15,11 +15,6 @@ function downloadCV() {
   const file = `assets/Francisco-Martinez-Fenoll-CV${lang === "es" ? "-ESP" : ""}.pdf`;
   window.open(file);
 }
-// cargar idioma al abrir la web
-const savedLang = localStorage.getItem("lang") || detectUserLanguage();
-setLanguage(savedLang);
-updateLangToggle(savedLang);
-
 function detectUserLanguage() {
   const browserLang = navigator.language || navigator.languages[0];
 
@@ -65,25 +60,216 @@ function setLanguage(lang) {
   renderExperience();
   renderGameProjects();
   renderWebProjects();
+
+  // El re-render sustituye las tarjetas por nodos nuevos, así que las
+  // animaciones que apuntaban a las anteriores hay que rehacerlas.
+  if (typeof construirAnimaciones === "function") construirAnimaciones();
 }
 
 
 // ============================================
-// INTERSECTION OBSERVER FOR SCROLL ANIMATIONS
+// SCROLL ANIMATIONS (GSAP + ScrollTrigger)
 // ============================================
-// La animación de entrada ocurre una sola vez por sección: se añade 'show' al
-// aparecer y no se quita nunca. Antes se retiraba al salir de pantalla, así que
-// al volver a subir el contenido desaparecía y entraba de nuevo desde la
-// izquierda. Se sigue observando (sin unobserve) para que las secciones que un
-// salto de scroll rápido se salta acaben marcándose igualmente.
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) entry.target.classList.add('show');
-  });
-}, { threshold: 0, rootMargin: '0px 0px -10% 0px' });
+gsap.registerPlugin(ScrollTrigger);
 
-const hiddenElements = document.querySelectorAll('.hidden');
-hiddenElements.forEach((el) => observer.observe(el));
+// Todo el movimiento se declara dentro de matchMedia: cuando el usuario pide
+// prefers-reduced-motion, GSAP revierte solo lo que se creó en esa rama, así
+// que basta con dejar el contenido visible sin animarlo.
+const mm = gsap.matchMedia();
+
+// Las tarjetas de proyecto se repintan al cambiar de idioma, así que las
+// animaciones se crean después de cada render y hay que poder rehacerlas.
+let animacionesContenido = [];
+
+function limpiarAnimacionesContenido() {
+  animacionesContenido.forEach((a) => a.kill());
+  animacionesContenido = [];
+}
+
+// Entrada de las secciones. Se usa autoAlpha en vez de opacity para que un
+// elemento a 0 no siga capturando clics.
+function animarSecciones(conMovimiento) {
+  const secciones = gsap.utils.toArray('.hidden');
+
+  if (!conMovimiento) {
+    gsap.set(secciones, { autoAlpha: 1, x: 0 });
+    return;
+  }
+
+  secciones.forEach((seccion) => {
+    animacionesContenido.push(
+      gsap.fromTo(
+        seccion,
+        { autoAlpha: 0, x: -60 },
+        {
+          autoAlpha: 1,
+          x: 0,
+          duration: 0.9,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: seccion, start: 'top 85%', once: true },
+        }
+      )
+    );
+  });
+}
+
+// Las tarjetas entran en tandas: ScrollTrigger.batch agrupa las que aparecen
+// juntas y las anima con un stagger, en lugar de una animación por tarjeta.
+function animarTarjetas(conMovimiento) {
+  const tarjetas = gsap.utils.toArray(
+    '#web-proyects .details-container, #game-proyects .details-container, #experience .details-container'
+  );
+  if (!tarjetas.length) return;
+
+  if (!conMovimiento) {
+    gsap.set(tarjetas, { autoAlpha: 1, y: 0 });
+    return;
+  }
+
+  gsap.set(tarjetas, { autoAlpha: 0, y: 48 });
+
+  const lotes = ScrollTrigger.batch(tarjetas, {
+    start: 'top 88%',
+    once: true,
+    batchMax: 3,
+    interval: 0.12,
+    onEnter: (grupo) =>
+      gsap.to(grupo, {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.75,
+        stagger: 0.1,
+        ease: 'power3.out',
+        overwrite: true,
+      }),
+  });
+
+  animacionesContenido.push(...lotes);
+}
+
+// Parallax suave de las capturas de proyecto: se mueven algo menos que el
+// scroll, así que la tarjeta gana profundidad.
+function animarParallax(conMovimiento) {
+  const imagenes = gsap.utils.toArray('.project-img');
+  if (!imagenes.length) return;
+
+  if (!conMovimiento) {
+    gsap.set(imagenes, { y: 0, scale: 1 });
+    return;
+  }
+
+  imagenes.forEach((img) => {
+    animacionesContenido.push(
+      gsap.fromTo(
+        img,
+        { y: 26 },
+        {
+          y: -26,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: img.closest('.details-container') || img,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 1,
+          },
+        }
+      )
+    );
+  });
+}
+
+// Hover de las tarjetas: se elevan y la captura hace un zoom más lento que el
+// movimiento de la tarjeta, para que el conjunto no se sienta rígido.
+function activarHoverTarjetas(conMovimiento) {
+  if (!conMovimiento) return;
+
+  gsap.utils
+    .toArray('#web-proyects .details-container, #game-proyects .details-container')
+    .forEach((tarjeta) => {
+      const img = tarjeta.querySelector('.project-img');
+
+      tarjeta.addEventListener('mouseenter', () => {
+        gsap.to(tarjeta, { y: -8, duration: 0.4, ease: 'power3.out' });
+        if (img) gsap.to(img, { scale: 1.06, duration: 0.7, ease: 'power2.out' });
+      });
+
+      tarjeta.addEventListener('mouseleave', () => {
+        gsap.to(tarjeta, { y: 0, duration: 0.5, ease: 'power3.out' });
+        if (img) gsap.to(img, { scale: 1, duration: 0.7, ease: 'power2.out' });
+      });
+    });
+}
+
+// Iconos de "Sobre mí" y "Experiencia": entran con un pequeño rebote cuando la
+// tarjeta aparece, en lugar de aparecer de golpe con el resto del bloque.
+function animarIconos(conMovimiento) {
+  const iconos = gsap.utils.toArray('#about .details-container .icon');
+  if (!iconos.length) return;
+
+  if (!conMovimiento) {
+    gsap.set(iconos, { autoAlpha: 1, scale: 1 });
+    return;
+  }
+
+  animacionesContenido.push(
+    gsap.fromTo(
+      iconos,
+      { autoAlpha: 0, scale: 0.5 },
+      {
+        autoAlpha: 1,
+        scale: 1,
+        duration: 0.6,
+        stagger: 0.12,
+        ease: 'back.out(2)',
+        scrollTrigger: { trigger: '#about', start: 'top 78%', once: true },
+      }
+    )
+  );
+}
+
+// Entrada de la cabecera al cargar: retrato, textos y botones escalonados.
+function animarPortada(conMovimiento) {
+  // project.html no tiene portada.
+  if (!conMovimiento || !document.getElementById('profile')) return;
+
+  gsap
+    .timeline({ defaults: { ease: 'power3.out' } })
+    .fromTo('#profile .section__pic-container',
+      { autoAlpha: 0, scale: 0.9 },
+      { autoAlpha: 1, scale: 1, duration: 0.9 })
+    .fromTo('#profile .section__text__p1',
+      { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.5 }, '-=0.55')
+    .fromTo('#profile .title',
+      { autoAlpha: 0, y: 26 }, { autoAlpha: 1, y: 0, duration: 0.7 }, '-=0.35')
+    .fromTo('#profile .section__text__p2',
+      { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.5 }, '-=0.45')
+    .fromTo('#profile .btn',
+      { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.45, stagger: 0.08 }, '-=0.3')
+    .fromTo('#socials-container .icon',
+      { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.07 }, '-=0.25');
+}
+
+// Se llama al arrancar y cada vez que se repintan los proyectos.
+function construirAnimaciones() {
+  limpiarAnimacionesContenido();
+
+  mm.add(
+    { conMovimiento: '(prefers-reduced-motion: no-preference)' },
+    (contexto) => {
+      const { conMovimiento } = contexto.conditions;
+
+      animarSecciones(conMovimiento);
+      animarTarjetas(conMovimiento);
+      animarParallax(conMovimiento);
+      animarIconos(conMovimiento);
+      activarHoverTarjetas(conMovimiento);
+    }
+  );
+
+  // Las capturas de proyecto cambian la altura de la página al cargarse, así
+  // que hay que recalcular las posiciones de los triggers.
+  ScrollTrigger.refresh();
+}
 
 // ============================================
 // RENDER EXPERIENCE SECTION
@@ -309,19 +495,18 @@ if (project) {
 // INITIALIZE ON PAGE LOAD
 // ============================================
 document.addEventListener('DOMContentLoaded', () => {
-  if (document.getElementById('experience')) {
-    renderExperience();
-  }
-
-  if (document.getElementById('game-proyects')) {
-    renderGameProjects();
-  }
-
-  if (document.getElementById('web-proyects')) {
-    renderWebProjects();
-  }
+  // setLanguage() ya repinta experiencia y proyectos, y al terminar llama a
+  // construirAnimaciones(), así que este es el único punto de entrada.
+  const idioma = localStorage.getItem("lang") || detectUserLanguage();
+  setLanguage(idioma);
+  updateLangToggle(idioma);
 
   if (document.getElementById('article')) {
     renderProjectDetail();
   }
+
+  animarPortada(!window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+  // Las capturas cambian la altura de la página al terminar de cargarse.
+  window.addEventListener('load', () => ScrollTrigger.refresh());
 });
