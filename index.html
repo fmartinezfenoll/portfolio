@@ -7,18 +7,18 @@
     <title>My Portfolio</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="mediaqueries.css" />
-    <script defer src="script.js"></script>
   </head>
   <body>
     <nav id="desktop-nav">
       <div class="logo">Fran Martínez</div>
       <div>
         <ul class="nav-links">
-          <li><a href="#about">About</a></li>
-          <li><a href="#experience">Experience</a></li>
-          <li><a href="#web-projects">Web Projects</a></li>
-          <li><a href="#game-projects">Games</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li><a href="#" class="lang-toggle" onclick="toggleLanguage()">ES</a></li>
+          <li><a href="#about" data-i18n="nav.about">About</a></li>
+          <li><a href="#experience" data-i18n="nav.experience">Experience</a></li>
+          <li><a href="#web-projects" data-i18n="nav.web">Web Projects</a></li>
+          <li><a href="#game-projects" data-i18n="nav.games">Games</a></li>
+          <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
         </ul>
       </div>
     </nav>
@@ -31,11 +31,14 @@
           <span></span>
         </div>
         <div class="menu-links">
-          <li><a href="#about" onclick="toggleMenu()">About</a></li>
-          <li><a href="#experience" onclick="toggleMenu()">Experience</a></li>
-          <li><a href="#game-projects" onclick="toggleMenu()">Games</a></li>
-          <li><a href="#web-projects" onclick="toggleMenu()">Web Projects</a></li>
-          <li><a href="#contact" onclick="toggleMenu()">Contact</a></li>
+        <ul class="nav-links">
+          <li><a href="#" class="lang-toggle" onclick="toggleLanguage()">ES</a></li>
+          <li><a href="#about" data-i18n="nav.about">About</a></li>
+          <li><a href="#experience" data-i18n="nav.experience">Experience</a></li>
+          <li><a href="#web-projects" data-i18n="nav.web">Web Projects</a></li>
+          <li><a href="#game-projects" data-i18n="nav.games">Games</a></li>
+          <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+        </ul>
         </div>
       </div>
     </nav>
@@ -44,17 +47,20 @@
         <img src="assets/about-pic.png" alt="Fran Martínez profile picture" />
       </div>
       <div class="section__text">
-        <p class="section__text__p1">Hello, I'm</p>
+        <p class="section__text__p1" data-i18n="profile.hello">Hello, I'm</p>
         <h1 class="title">Fran Martínez</h1>
-        <p class="section__text__p2">Software Developer</p>
+        <p class="section__text__p2" data-i18n="profile.role">Software Developer</p>
         <div class="btn-container">
           <button
             class="btn btn-color-2"
-            onclick="window.open('assets/Francisco-Martinez-Fenoll-CV.pdf')"
+            data-i18n="profile.download"
+            onclick="downloadCV()"
           >
             Download CV
           </button>
-          <button class="btn btn-color-1" onclick="location.href='#contact'">
+          <button class="btn btn-color-1"
+          data-i18n="profile.contact"
+          onclick="location.href='#contact'">
             Contact Info
           </button>
         </div>
@@ -74,113 +80,129 @@
         </div>
       </div>
     </section>
-    <section id="about" class="hidden">
-      <p class="section__text__p1">Get To Know More</p>
-      <h1 class="title">About Me</h1>
-      <div class="section-container">
-        <div class="section__pic-container">
+<section id="about" class="hidden">
+  <p class="section__text__p1" data-i18n="about.subtitle">Get To Know More</p>
+  <h1 class="title" data-i18n="about.title">About Me</h1>
+
+  <div class="section-container">
+    <div class="section__pic-container">
+      <img
+        src="assets/profile-pic.png"
+        alt="Profile picture"
+        class="about-pic"
+      />
+    </div>
+
+    <div class="about-details-container">
+      <div class="about-containers">
+
+        <div class="details-container">
           <img
-            src="assets/profile-pic.png"
-            alt="Profile picture"
-            class="about-pic"
+            src="assets/experience.png"
+            alt="Experience icon"
+            class="icon"
           />
+          <h3 data-i18n="about.experience">Experience</h3>
+          <p data-i18n="about.years">
+            4+ years <br />Software developer
+          </p>
         </div>
-        <div class="about-details-container">
-          <div class="about-containers">
-            <div class="details-container">
-              <img
-                src="assets/experience.png"
-                alt="Experience icon"
-                class="icon"
-              />
-              <h3>Experience</h3>
-              <p>4+ years <br />Software developer</p>
-            </div>
-            <div class="details-container">
-              <img
-                src="assets/education.png"
-                alt="Education icon"
-                class="icon"
-              />
-              <h3>Education</h3>
-              <p>Multimedia Engineering Bachelor's Degree<br />Universidad Alicante</p>
-            </div>
-          </div>
-          <div class="text-container">
-            <p>
-I'm a game developer and software engineer passionate about building interactive experiences across both games and web applications, combining strong technical foundations with thoughtful design.
 
-I’ve worked across multiple areas of game development from gameplay programming and AI systems using behavior trees, to custom engines built in C++ and OpenGL, and multiplayer experiences with Unity Netcode. Alongside this, I’ve developed modern web applications, including responsive interfaces and full-stack systems using technologies like Angular and the MEAN stack.
-
-My experience ranges from jam-winning prototypes to commercial releases like Crimanimals, as well as professional roles as a Graphic Software Engineer and Unity 3D Developer. I’ve also worked as a web developer, creating user-focused applications and collaborating closely with backend systems.
-
-In addition, I enjoy sharing knowledge as a freelance programming instructor, helping others get started in both game development and software engineering.
-            </p>
-          </div>
+        <div class="details-container">
+          <img
+            src="assets/education.png"
+            alt="Education icon"
+            class="icon"
+          />
+          <h3 data-i18n="about.education">Education</h3>
+          <p data-i18n="about.degree">
+            Multimedia Engineering Bachelor's Degree<br />Universidad Alicante
+          </p>
         </div>
+
       </div>
-      <img
-        src="assets/arrow.png"
-        alt="Arrow icon"
-        class="icon arrow"
-        onclick="location.href='#experience'"
-      />
-    </section>
-    <section id="experience" class="hidden">
-      <p class="section__text__p1">Explore My</p>
-      <h1 class="title">Experience</h1>
-      <div class="experience-details-container">
-        <div class="about-containers">
-          <!-- Content will be dynamically generated by data.js -->
-        </div>
+
+      <div class="text-container">
+        <p data-i18n="about.text">
+          I'm a game developer and software engineer passionate about building interactive experiences across both games and web applications, combining strong technical foundations with thoughtful design.
+
+          I’ve worked across multiple areas of game development from gameplay programming and AI systems using behavior trees, to custom engines built in C++ and OpenGL, and multiplayer experiences with Unity Netcode. Alongside this, I’ve developed modern web applications, including responsive interfaces and full-stack systems using technologies like Angular and the MEAN stack.
+
+          My experience ranges from jam-winning prototypes to commercial releases like Crimanimals, as well as professional roles as a Graphic Software Engineer and Unity 3D Developer. I’ve also worked as a web developer, creating user-focused applications and collaborating closely with backend systems.
+
+          In addition, I enjoy sharing knowledge as a freelance programming instructor, helping others get started in both game development and software engineering.
+        </p>
       </div>
-      <img 
-        src="assets/arrow.png" 
-        alt="Arrow icon" 
-        class="icon arrow" 
-        onclick="location.href='#game-projects'" 
-      />
-    </section>
-    
-    <!-- WEB PROJECTS SECTION -->
-    <section id="web-projects" class="hidden">
-      <p class="section__text__p1">Browse My</p>
-      <h1 class="title">Web Projects</h1>
-      <div class="experience-details-container">
-        <div class="about-containers" id="web-proyects">
-          <!-- Dynamic web project containers will be added here -->
-        </div>
-      </div>
-      <img
-        src="assets/arrow.png"
-        alt="Arrow icon"
-        class="icon arrow"
-        onclick="location.href='#contact'"
-      />
-    </section>
+    </div>
+  </div>
 
-    <!-- GAME PROJECTS SECTION -->
-    <section id="game-projects" class="hidden">
-      <p class="section__text__p1">Browse My</p>
-      <h1 class="title">Game Projects</h1>
-      <div class="experience-details-container">
-        <div class="about-containers" id="game-proyects">
-          <!-- Dynamic game project containers will be added here -->
-        </div>
-      </div>
-      <img
-        src="assets/arrow.png"
-        alt="Arrow icon"
-        class="icon arrow"
-        onclick="location.href='#web-projects'"
-      />
-    </section>
+  <img
+    src="assets/arrow.png"
+    alt="Arrow icon"
+    class="icon arrow"
+    onclick="location.href='#experience'"
+  />
+</section>
 
+<section id="experience" class="hidden">
+  <p class="section__text__p1" data-i18n="sections.explore">Explore My</p>
+  <h1 class="title" data-i18n="sections.experience">Experience</h1>
 
+  <div class="experience-details-container">
+    <div class="about-containers">
+      <!-- Content will be dynamically generated by data.js -->
+    </div>
+  </div>
 
-    <section id="contact" class="hidden">
-      <p class="section__text__p1">Get in Touch</p>
-      <h1 class="title">Contact Me</h1>
+  <img 
+    src="assets/arrow.png" 
+    alt="Arrow icon" 
+    class="icon arrow" 
+    onclick="location.href='#game-projects'" 
+  />
+</section>
+
+<!-- WEB PROJECTS SECTION -->
+<section id="web-projects" class="hidden">
+  <p class="section__text__p1" data-i18n="sections.browse">Browse My</p>
+  <h1 class="title" data-i18n="sections.web">Web Projects</h1>
+
+  <div class="experience-details-container">
+    <div class="about-containers" id="web-proyects">
+      <!-- Dynamic web project containers will be added here -->
+    </div>
+  </div>
+
+  <img
+    src="assets/arrow.png"
+    alt="Arrow icon"
+    class="icon arrow"
+    onclick="location.href='#contact'"
+  />
+</section>
+
+<!-- GAME PROJECTS SECTION -->
+<section id="game-projects" class="hidden">
+  <p class="section__text__p1" data-i18n="sections.browse">Browse My</p>
+  <h1 class="title" data-i18n="sections.games">Game Projects</h1>
+
+  <div class="experience-details-container">
+    <div class="about-containers" id="game-proyects">
+      <!-- Dynamic game project containers will be added here -->
+    </div>
+  </div>
+
+  <img
+    src="assets/arrow.png"
+    alt="Arrow icon"
+    class="icon arrow"
+    onclick="location.href='#web-projects'"
+  />
+</section>
+
+<section id="contact" class="hidden">
+  <p class="section__text__p1" data-i18n="contact.subtitle">Get in Touch</p>
+  <h1 class="title" data-i18n="contact.title">Contact Me</h1>
       <div class="contact-info-upper-container">
         <div class="contact-info-container">
           <img
@@ -212,17 +234,20 @@ In addition, I enjoy sharing knowledge as a freelance programming instructor, he
       <nav>
         <div class="nav-links-container">
           <ul class="nav-links">
-            <li><a href="#about">About</a></li>
-            <li><a href="#experience">Experience</a></li>
-            <li><a href="#game-projects">Games</a></li>
-            <li><a href="#web-projects">Web Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
+          <li><a href="#" class="lang-toggle" onclick="toggleLanguage()">ES</a></li>
+          <li><a href="#about" data-i18n="nav.about">About</a></li>
+          <li><a href="#experience" data-i18n="nav.experience">Experience</a></li>
+          <li><a href="#web-projects" data-i18n="nav.web">Web Projects</a></li>
+          <li><a href="#game-projects" data-i18n="nav.games">Games</a></li>
+          <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
           </ul>
         </div>
       </nav>
-      <p>Copyright &#169; 2025 Fran Martínez. All Rights Reserved.</p>
+      <p>Copyright &#169; 2026 Fran Martínez. All Rights Reserved.</p>
     </footer>
   <!-- Include JS files -->
-  <script src="data.js"></script>
+<script src="data.js"></script>
+<script src="translations.js"></script>
+<script src="script.js"></script>
   </body>
 </html>

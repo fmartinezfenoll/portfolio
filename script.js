@@ -7,6 +7,66 @@ function toggleMenu() {
   menu.classList.toggle("open");
   icon.classList.toggle("open");
 }
+// ============================================
+// IDIOMA
+// ============================================
+function downloadCV() {
+  const lang = localStorage.getItem("lang") || "en";
+  const file = `assets/Francisco-Martinez-Fenoll-CV${lang === "es" ? "-ESP" : ""}.pdf`;
+  window.open(file);
+}
+// cargar idioma al abrir la web
+const savedLang = localStorage.getItem("lang") || detectUserLanguage();
+setLanguage(savedLang);
+updateLangToggle(savedLang);
+
+function detectUserLanguage() {
+  const browserLang = navigator.language || navigator.languages[0];
+
+  if (browserLang.startsWith("es")) {
+    return "es";
+  } else {
+    return "en";
+  }
+}
+function toggleLanguage() {
+  const currentLang = localStorage.getItem("lang") || "en";
+  const newLang = currentLang === "en" ? "es" : "en";
+
+  setLanguage(newLang);
+  updateLangToggle(newLang);
+}
+
+function updateLangToggle(lang) {
+  const toggles = document.querySelectorAll(".lang-toggle");
+
+  toggles.forEach(toggle => {
+    if (lang === "en") {
+      toggle.textContent = "ESPAÑOL";
+    } else {
+      toggle.textContent = "ENGLISH";
+    }
+  });
+}
+function setLanguage(lang) {
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const keys = el.getAttribute("data-i18n").split(".");
+    let value = translations[lang];
+
+    keys.forEach(k => value = value[k]);
+
+    if (value) el.textContent = value;
+  });
+
+  document.documentElement.lang = lang;
+  localStorage.setItem("lang", lang);
+
+  // re-render dinámico
+  renderExperience();
+  renderGameProjects();
+  renderWebProjects();
+}
+
 
 // ============================================
 // INTERSECTION OBSERVER FOR SCROLL ANIMATIONS
@@ -36,27 +96,33 @@ function renderExperience() {
 
   aboutContainers.innerHTML = '';
 
+  const lang = localStorage.getItem("lang") || "en";
+
   experienceData.forEach(experience => {
     const detailsContainer = document.createElement('div');
     detailsContainer.className = 'details-container';
 
+    // TITLE
     const title = document.createElement('h2');
     title.className = 'experience-sub-title';
-    title.textContent = experience.title;
+    title.textContent = experience.title[lang];
     detailsContainer.appendChild(title);
 
+    // COMPANY
     const company = document.createElement('h3');
     company.className = 'company';
     company.textContent = experience.company;
     detailsContainer.appendChild(company);
 
+    // DESCRIPTION
     if (experience.description) {
       const desc = document.createElement('p');
       desc.className = 'experience-description';
-      desc.textContent = experience.description;
+      desc.textContent = experience.description[lang];
       detailsContainer.appendChild(desc);
     }
 
+    // SKILLS
     const articleContainer = document.createElement('div');
     articleContainer.className = 'article-container';
     articleContainer.style.justifyContent = 'center';
@@ -95,11 +161,14 @@ function renderProjectsToContainer(projectsArray, containerId, categoryPrefix) {
 
   projectsContainer.innerHTML = '';
 
+  const lang = localStorage.getItem("lang") || "en";
+
   projectsArray.forEach((project, index) => {
     const projectCard = document.createElement('div');
     projectCard.className = 'details-container color-container';
     projectCard.style.cursor = 'pointer';
 
+    // IMAGE
     const imgContainer = document.createElement('div');
     imgContainer.className = 'article-container';
 
@@ -110,18 +179,25 @@ function renderProjectsToContainer(projectsArray, containerId, categoryPrefix) {
 
     imgContainer.appendChild(img);
 
+    // TITLE
     const title = document.createElement('h2');
     title.className = 'experience-sub-title project-title';
-    title.textContent = project.title;
+    title.textContent = project.title[lang];
+
+    // DESCRIPTION (opcional)
+    const desc = document.createElement('p');
+    desc.className = 'project-description';
+    desc.textContent = project.description[lang];
+
+    // TAGS
+    const tagsContainer = document.createElement('div');
+    tagsContainer.style.display = 'flex';
+    tagsContainer.style.flexWrap = 'wrap';
+    tagsContainer.style.gap = '0.5rem';
+    tagsContainer.style.justifyContent = 'center';
+    tagsContainer.style.marginBottom = '1rem';
 
     if (project.tags && project.tags.length > 0) {
-      const tagsContainer = document.createElement('div');
-      tagsContainer.style.display = 'flex';
-      tagsContainer.style.flexWrap = 'wrap';
-      tagsContainer.style.gap = '0.5rem';
-      tagsContainer.style.justifyContent = 'center';
-      tagsContainer.style.marginBottom = '1rem';
-
       project.tags.forEach(tag => {
         const tagElement = document.createElement('span');
         tagElement.textContent = tag;
@@ -134,30 +210,30 @@ function renderProjectsToContainer(projectsArray, containerId, categoryPrefix) {
         tagElement.style.fontWeight = '500';
         tagsContainer.appendChild(tagElement);
       });
-
-      projectCard.appendChild(imgContainer);
-      projectCard.appendChild(title);
-      projectCard.appendChild(tagsContainer);
-    } else {
-      projectCard.appendChild(imgContainer);
-      projectCard.appendChild(title);
     }
 
+    // BUTTON
     const btnContainer = document.createElement('div');
     btnContainer.className = 'btn-container';
 
     const btn = document.createElement('button');
     btn.className = 'btn btn-color-2 project-btn';
-    btn.textContent = 'Official Page';
+    btn.textContent = lang === "en" ? "Official Page" : "Página Oficial";
     btn.onclick = (e) => {
       e.stopPropagation();
       location.href = project.liveDemoLink;
     };
 
     btnContainer.appendChild(btn);
+
+    // BUILD CARD
+    projectCard.appendChild(imgContainer);
+    projectCard.appendChild(title);
+    projectCard.appendChild(desc);
+    projectCard.appendChild(tagsContainer);
     projectCard.appendChild(btnContainer);
 
-    // Add click handler with category prefix
+    // CLICK CARD
     projectCard.onclick = () => {
       window.location.href = `project.html?category=${categoryPrefix}&id=${index}`;
     };
