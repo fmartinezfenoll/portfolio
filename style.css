@@ -3,6 +3,26 @@
 /* Misma familia que los mini-proyectos alojados, para que el portfolio y lo
    que enlaza se lean como un mismo sistema. */
 @import url("https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Archivo+Black&display=swap");
+/* Paleta crema. Los tres tonos base vienen del encargo (EFE9E3, D9CFC7,
+   C9B59C); el resto son un marrón oscuro para el texto y sus grises cálidos,
+   para que ningún gris quede azulado sobre el fondo crema. */
+:root {
+  --crema: #efe9e3;
+  --crema-2: #e6ded6;
+  --arena: #d9cfc7;
+  --arena-2: #c9b59c;
+
+  /* Marrón de contraste; los dos tonos medios salen de aclararlo, así todo el
+     texto comparte el mismo matiz cálido en lugar de tirar a gris. */
+  --tinta: #412d15;
+  --tinta-media: #6b5334;
+  /* Se usa en el antetítulo, que es texto pequeño: a #96795a se quedaba en
+     3.37:1 y no llegaba al 4.5 que pide WCAG AA. */
+  --tinta-suave: #7d6342;
+  --linea: #cfc4b8;
+  --panel: #f7f3ef;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -10,7 +30,8 @@
 
 body {
   font-family: "Archivo", "Segoe UI", system-ui, sans-serif;
-  background-color: #fcfefd;
+  background-color: var(--crema);
+  color: var(--tinta);
 }
 
 html {
@@ -28,7 +49,7 @@ h1 {
   margin-bottom: 20px;
 }
 p {
-  color: rgb(85, 85, 85);
+  color: var(--tinta-media);
 }
 
 /* TRANSITION */
@@ -61,9 +82,9 @@ nav {
 }
 
 a {
-  color: black;
+  color: var(--tinta);
   text-decoration: none;
-  text-decoration-color: white;
+  text-decoration-color: var(--crema);
 }
 
 /* Subrayado que se dibuja de izquierda a derecha, en vez de aparecer de golpe
@@ -92,7 +113,7 @@ a {
 }
 
 a:hover {
-  color: rgb(20, 20, 20);
+  color: var(--tinta);
 }
 
 .logo {
@@ -129,7 +150,7 @@ a:hover {
 .hamburger-icon span {
   width: 100%;
   height: 2px;
-  background-color: black;
+  background-color: var(--tinta);
   transition: all 0.3 ease-in-out;
 }
 
@@ -137,7 +158,7 @@ a:hover {
   position: absolute;
   top: 100%;
   right: 0;
-  background-color: white;
+  background-color: var(--panel);
   width: fit-content;
   max-height: 0;
   overflow: hidden;
@@ -149,7 +170,7 @@ a:hover {
   padding: 10px;
   text-align: center;
   font-size: 1.5rem;
-  color: black;
+  color: var(--tinta);
   text-decoration: none;
   transition: all 0.3 ease-in-out;
 }
@@ -218,6 +239,23 @@ section {
   margin: auto 0;
 }
 
+/* La ilustración de la portada trae el fondo blanco incrustado en el PNG (su
+   esquina es #fcfefd opaco, el color de fondo que tenía antes la web), que
+   sobre el crema se ve como un recuadro. multiply lo hace desaparecer, pero
+   necesita mezclarse contra un fondo dentro de su propio contexto: GSAP aplica
+   un transform al contenedor durante la entrada, y eso aísla el blend. De ahí
+   el background-color aquí, en lugar de confiar en el del body. */
+#profile .section__pic-container {
+  background-color: var(--crema);
+}
+
+#profile .section__pic-container img {
+  mix-blend-mode: multiply;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
 .section__text {
   align-self: center;
   text-align: center;
@@ -234,7 +272,7 @@ section {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.16em;
-  color: rgb(120, 120, 120);
+  color: var(--tinta-suave);
 }
 
 .section__text__p2 {
@@ -286,8 +324,8 @@ section {
 
 /* Etiquetas de tecnología: el borde se marca al pasar por la tarjeta. */
 .details-container:hover .tag {
-  border-color: rgb(150, 150, 150);
-  background-color: #ececec;
+  border-color: var(--arena-2);
+  background-color: var(--crema-2);
 }
 
 .tag {
@@ -301,8 +339,8 @@ section {
 }
 
 .details-container.color-container:hover {
-  border-color: rgb(90, 90, 90);
-  box-shadow: 0 18px 40px -22px rgba(0, 0, 0, 0.45);
+  border-color: var(--tinta-media);
+  box-shadow: 0 18px 40px -22px rgba(46, 40, 34, 0.28);
 }
 
 /* BUTTONS */
@@ -332,7 +370,7 @@ section {
   position: relative;
   overflow: hidden;
   isolation: isolate;
-  border: rgb(53, 53, 53) 0.1rem solid;
+  border: var(--tinta) 0.1rem solid;
   cursor: pointer;
 }
 
@@ -342,7 +380,7 @@ section {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: rgb(20, 20, 20);
+  background: var(--tinta);
   transform: translateY(101%);
   transition: transform 380ms cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -356,19 +394,19 @@ section {
 
 /* El botón primario ya nace oscuro; en hover solo se intensifica. */
 .btn-color-1 {
-  background: rgb(53, 53, 53);
-  color: white;
+  background: var(--tinta);
+  color: var(--crema);
 }
 
 .btn-color-2 {
   background: none;
-  color: rgb(20, 20, 20);
+  color: var(--tinta);
 }
 
 .btn-color-2:hover,
 .btn-color-2:focus-visible {
-  color: white;
-  border-color: rgb(20, 20, 20);
+  color: var(--crema);
+  border-color: var(--tinta);
 }
 
 .btn-container {
@@ -390,7 +428,7 @@ section {
 }
 
 #about .section__pic-container {
-  flex: 0 0 clamp(12rem, 19vw, 18rem);
+  flex: 0 0 clamp(11rem, 16vw, 16rem);
   width: auto;
   height: auto;
   aspect-ratio: 1;
@@ -468,9 +506,9 @@ section {
 
 .details-container {
   padding: 1.75rem;
-  background: white;
+  background: var(--panel);
   border-radius: 1.25rem;
-  border: rgb(163, 163, 163) 0.1rem solid;
+  border: var(--linea) 0.1rem solid;
   max-width: 60rem;
   text-align: center;
 }
@@ -492,7 +530,7 @@ section {
 }
 
 .experience-sub-title {
-  color: rgb(30, 30, 30);
+  color: var(--tinta);
   font-weight: 700;
   font-size: 1.35rem;
   line-height: 1.25;
@@ -532,8 +570,8 @@ article .icon {
 }
 
 .color-container {
-  border-color: rgb(163, 163, 163);
-  background: rgb(250, 250, 250);
+  border-color: var(--linea);
+  background: var(--panel);
 }
 
 /* height: 90% junto a width: 90% deformaba las capturas (una de 1.45 de ratio
@@ -550,7 +588,7 @@ article .icon {
 
 .project-title {
   margin: 1.1rem 0 0.25rem;
-  color: black;
+  color: var(--tinta);
   text-align: left;
 }
 
@@ -564,13 +602,13 @@ article .icon {
 
 .tag {
   padding: 0.3rem 0.75rem;
-  background-color: #f2f2f2;
-  border: 1px solid rgb(200, 200, 200);
+  background-color: var(--arena);
+  border: 1px solid var(--linea);
   border-radius: 0.5rem;
   font-size: 0.85rem;
   font-weight: 600;
   letter-spacing: 0.02em;
-  color: rgb(80, 80, 80);
+  color: var(--tinta-media);
   white-space: nowrap;
 }
 
@@ -596,8 +634,8 @@ article .icon {
 }
 
 .project-btn {
-  color: black;
-  border-color: rgb(163, 163, 163);
+  color: var(--tinta);
+  border-color: var(--linea);
 }
 
 /* CONTACT */
@@ -613,8 +651,8 @@ article .icon {
   display: flex;
   justify-content: center;
   border-radius: 2rem;
-  border: rgb(53, 53, 53) 0.1rem solid;
-  border-color: rgb(163, 163, 163);
+  border: var(--tinta) 0.1rem solid;
+  border-color: var(--linea);
   background: (250, 250, 250);
   margin: 2rem auto;
   padding: 0.5rem;
@@ -697,7 +735,7 @@ footer p {
    El texto corrido se alinea a la izquierda y se le da interlineado: en
    párrafos largos, centrar obliga a buscar el inicio de cada línea. */
 .experience-description {
-  color: rgb(75, 75, 75);
+  color: var(--tinta-media);
   font-size: 1.05rem;
   margin: 0.6rem 0 1.1rem;
   line-height: 1.6;
@@ -706,28 +744,23 @@ footer p {
 
 /* Descripción de proyecto: es el bloque más largo de la tarjeta. */
 .project-description {
-  color: rgb(75, 75, 75);
+  color: var(--tinta-media);
   font-size: 1.05rem;
   line-height: 1.65;
   text-align: left;
   margin: 0.75rem 0 1.2rem;
 }
 
-/* Párrafo de "Sobre mí": ~1100 caracteres. A todo el ancho de su columna la
-   línea llegaba a ~93 caracteres, donde el ojo pierde el renglón al volver.
-   En dos columnas se aprovecha el ancho completo y cada línea baja a ~45. */
+/* Párrafo de "Sobre mí": ~1100 caracteres en un solo bloque continuo. Se probó
+   a dos columnas para acortar la línea, pero obligaba a bajar al final de la
+   primera y volver arriba, que en texto corrido se lee peor que una línea
+   larga. Queda en una columna ocupando su ancho; el cuerpo sube a 1.22rem
+   para que la misma medida dé menos caracteres por línea (~85 en lugar de 93)
+   y el interlineado amplio sostiene la vuelta al renglón siguiente. */
 .text-container p {
-  font-size: 1.12rem;
-  line-height: 1.8;
-  columns: 2;
-  column-gap: 2.75rem;
+  font-size: 1.22rem;
+  line-height: 1.9;
   text-wrap: pretty;
-}
-
-@media screen and (max-width: 900px) {
-  .text-container p {
-    columns: 1;
-  }
 }
 
 .article-description {
