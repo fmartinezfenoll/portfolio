@@ -55,7 +55,7 @@ function setLanguage(lang) {
 
     keys.forEach(k => value = value[k]);
 
-    if (value) el.textContent = value;
+    if (value) el.innerHTML = value;
   });
 
   document.documentElement.lang = lang;
