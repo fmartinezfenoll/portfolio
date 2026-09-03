@@ -381,14 +381,16 @@ section {
   position: relative;
 }
 
-/* La foto tenía 400px fijos y con el gap dejaba el texto en poco más de la
-   mitad de la sección. Ahora se encoge y el texto se lleva el resto. */
+/* La foto tenía 400px fijos y con el gap se llevaba un tercio de la sección,
+   dejando el texto a media página. Ahora ocupa ~18rem y el gap baja, así que
+   el bloque de texto se queda con el resto. */
 #about .section-container {
-  align-items: flex-start;
+  align-items: center;
+  gap: 2.5rem;
 }
 
 #about .section__pic-container {
-  flex: 0 0 clamp(15rem, 24vw, 21rem);
+  flex: 0 0 clamp(12rem, 19vw, 18rem);
   width: auto;
   height: auto;
   aspect-ratio: 1;
@@ -406,14 +408,28 @@ section {
   min-width: 0;
 }
 
+/* Las dos tarjetas de datos van dentro de una columna de ~830px, así que el
+   mínimo de 30rem que usan las de proyecto las apilaba en dos filas enormes.
+   Aquí basta con 13rem para que queden lado a lado y ajustadas al contenido. */
+#about .about-containers {
+  grid-template-columns: repeat(auto-fit, minmax(min(13rem, 100%), 1fr));
+  margin-top: 0;
+}
+
+#about .about-containers .details-container {
+  padding: 1.35rem 1rem;
+}
+
 /* Rejilla en lugar de flex: con seis proyectos, flex: 1 comprimía cada tarjeta
    a ~275px y las descripciones quedaban en columnas de 34 caracteres. Con un
    mínimo de 22rem las líneas alcanzan una longitud legible. */
 /* Mínimo de 30rem: a 22rem entraban tres por fila y las descripciones caían
-   en columnas de ~37 caracteres. Con dos por fila las líneas llegan a ~55. */
+   en columnas de ~37 caracteres. Con dos por fila las líneas llegan a ~55.
+   min() con 100% evita que ese mínimo desborde en pantallas estrechas: 30rem
+   son 480px y en un móvil de 390 la tarjeta se salía del viewport. */
 .about-containers {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(30rem, 100%), 1fr));
   gap: 1.75rem;
   margin-bottom: 2rem;
   margin-top: 2rem;
@@ -697,14 +713,21 @@ footer p {
   margin: 0.75rem 0 1.2rem;
 }
 
-/* Párrafo de "Sobre mí": ~1100 caracteres. Se topa el ancho porque por encima
-   de ~75 caracteres por línea el ojo pierde el renglón al volver. La unidad
-   ch va sobre el ancho del "0", más estrecho que la media en Archivo, de ahí
-   el valor en rem. */
+/* Párrafo de "Sobre mí": ~1100 caracteres. A todo el ancho de su columna la
+   línea llegaba a ~93 caracteres, donde el ojo pierde el renglón al volver.
+   En dos columnas se aprovecha el ancho completo y cada línea baja a ~45. */
 .text-container p {
   font-size: 1.12rem;
   line-height: 1.8;
-  max-width: 42rem;
+  columns: 2;
+  column-gap: 2.75rem;
+  text-wrap: pretty;
+}
+
+@media screen and (max-width: 900px) {
+  .text-container p {
+    columns: 1;
+  }
 }
 
 .article-description {
