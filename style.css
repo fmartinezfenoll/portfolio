@@ -869,6 +869,28 @@ footer p {
 .hidden {
   will-change: transform, opacity;
 }
+
+/* La portada sí se oculta desde el CSS, al revés que las secciones de arriba.
+   El motivo: animarPortada() arranca en DOMContentLoaded, cuando el navegador
+   ya ha pintado el hero visible, así que el fromTo lo saltaba a invisible y lo
+   volvía a mostrar — un parpadeo al cargar. Ocultándolo antes del primer
+   pintado, GSAP solo tiene que revelarlo.
+
+   Depende de .js-anim (que añade un script inline en el <head>) para que sin
+   JavaScript la portada se vea igualmente, y de la media query para que quien
+   pide menos movimiento no se quede con un hero en blanco: en ese caso
+   animarPortada() no llega a ejecutarse y nadie revertiría el opacity. */
+@media (prefers-reduced-motion: no-preference) {
+  .js-anim #profile .section__pic-container,
+  .js-anim #profile .section__text__p1,
+  .js-anim #profile .title,
+  .js-anim #profile .section__text__p2,
+  .js-anim #profile .btn,
+  .js-anim #socials-container .icon {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
 #proyects{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));

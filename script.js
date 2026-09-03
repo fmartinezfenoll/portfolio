@@ -325,10 +325,36 @@ function activarHoverExperiencia(tarjeta) {
   animacionesContenido.push(tl);
 }
 
+// Selectores de la portada, en el mismo orden en que entran. El CSS los oculta
+// antes del primer pintado (regla .js-anim) para evitar el parpadeo, así que
+// esta lista es también la de "lo que hay que revelar sí o sí".
+const ELEMENTOS_PORTADA = [
+  '#profile .section__pic-container',
+  '#profile .section__text__p1',
+  '#profile .title',
+  '#profile .section__text__p2',
+  '#profile .btn',
+  '#socials-container .icon',
+];
+
+// Deshace el ocultado del CSS. Se llama cuando no va a haber animación de
+// entrada, para que la portada nunca se quede en blanco.
+function revelarPortadaSinAnimar() {
+  if (!document.getElementById('profile')) return;
+  gsap.set(ELEMENTOS_PORTADA.join(', '), { clearProps: 'visibility,opacity' });
+}
+
 // Entrada de la cabecera al cargar: retrato, textos y botones escalonados.
 function animarPortada(conMovimiento) {
   // project.html no tiene portada.
-  if (!conMovimiento || !document.getElementById('profile')) return;
+  if (!document.getElementById('profile')) return;
+
+  // Sin movimiento no hay timeline que revele el hero, y el CSS lo ha dejado
+  // oculto: hay que mostrarlo a mano.
+  if (!conMovimiento) {
+    revelarPortadaSinAnimar();
+    return;
+  }
 
   gsap
     .timeline({ defaults: { ease: 'power3.out' } })

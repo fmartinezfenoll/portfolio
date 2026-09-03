@@ -7,6 +7,25 @@
     <title>My Portfolio</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="mediaqueries.css" />
+    <!-- Marca la página como "con JS" antes del primer pintado. El CSS usa
+         esta clase para ocultar la portada, de modo que GSAP la revele con su
+         animación en vez de que se vea primero puesta y luego saltar a
+         invisible. Va inline y no en un archivo para que se aplique sin
+         esperar a ninguna descarga; si JS está desactivado la clase nunca se
+         añade y la portada se ve con normalidad. -->
+    <script>
+      document.documentElement.classList.add("js-anim");
+
+      // Red de seguridad: si GSAP no llega a cargar (CDN caído, error de red),
+      // nadie revelaría la portada y se quedaría en blanco. Al terminar de
+      // cargar la página se comprueba si está disponible; si no, se quita la
+      // clase y el hero se ve sin animación.
+      window.addEventListener("load", function () {
+        if (typeof gsap === "undefined") {
+          document.documentElement.classList.remove("js-anim");
+        }
+      });
+    </script>
   </head>
   <body>
     <nav id="desktop-nav">
