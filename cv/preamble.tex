@@ -1,7 +1,8 @@
 % Shared preamble for the CV (reference single-column, ATS-friendly style).
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage{lmodern}
+% Compiled with XeLaTeX so we can use Georgia directly (matches the .docx
+% master, which also uses Georgia) instead of the default Latin Modern.
+\usepackage{fontspec}
+\setmainfont{Georgia}
 \usepackage[a4paper,left=1.6cm,right=1.6cm,top=0.95cm,bottom=0.95cm]{geometry}
 \usepackage{titlesec}
 \usepackage{enumitem}
@@ -15,9 +16,12 @@
 % Clickable links keep the same text colour (ATS-friendly, no blue soup).
 \hypersetup{colorlinks=false, pdfborder={0 0 0}}
 
-% ---- Section headings: centred, bold, small-caps, thin rule under ----
+% ---- Section headings: centred, bold, thin rule under ----
+% (No small caps: Georgia has no true small-caps glyphs, so \scshape would
+% silently fall back to a substituted shape under fontspec. Bold title case
+% reproduces the reference style just as well.)
 \titleformat{\section}
-  {\centering\large\scshape\bfseries}
+  {\centering\large\bfseries}
   {}{0em}{}
   [\vspace{1pt}\hrule height 0.5pt\vspace{1pt}]
 \titlespacing*{\section}{0pt}{7pt}{3pt}

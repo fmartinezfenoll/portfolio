@@ -10,7 +10,7 @@ const translations = {
 
     profile: {
       hello: "Hello, I'm",
-      role: "AI Engineer & Software Developer",
+      role: "AI Engineer and Software Developer",
       download: "Download CV",
       contact: "Contact Info"
     },
@@ -20,7 +20,7 @@ const translations = {
       title: "About Me",
       experience: "Experience",
       education: "Education",
-      years: "3+ years <br />AI & Software Engineering",
+      years: "3+ years <br />AI and Software Engineering",
       degree: "Multimedia Engineering Bachelor's Degree<br />University of Alicante",
       text: `I'm an AI engineer and software developer building AI agents, full-stack web apps, and cloud services, with a strong engineering foundation from game development.
 

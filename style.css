@@ -588,11 +588,14 @@ section {
   box-shadow: 0 10px 22px -12px rgba(46, 40, 34, 0.5);
 }
 
-/* Empresa y periodo en una línea; en pantallas estrechas el periodo baja. */
+/* Empresa y periodo en una línea; en pantallas estrechas el periodo baja.
+   align-items: baseline (no center) porque company y period tienen tamaños
+   de fuente distintos: con center quedaban centrados por caja de línea y el
+   period parecía "flotar" más abajo que el nombre de la empresa. */
 .experience-meta {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: baseline;
   gap: 0.4rem 0.75rem;
 }
 

@@ -7,7 +7,7 @@
 const experienceData = [
   {
     title: {
-      en: "AI Engineer | Fullstack & Automation",
+      en: "AI Engineer | Fullstack and Automation",
       es: "AI Engineer | Fullstack y Automatización"
     },
     company: "NTT DATA",
@@ -22,7 +22,7 @@ const experienceData = [
   },
   {
     title: {
-      en: "Unity Developer | Netcode & Game Design",
+      en: "Unity Developer | Netcode and Game Design",
       es: "Desarrollador Unity | Netcode y Diseño de Juegos"
     },
     company: "GGTech Entertainment",
@@ -50,7 +50,7 @@ const experienceData = [
   },
   {
     title: {
-      en: "Graphic Software Engineer | Tech Art & Engine",
+      en: "Graphic Software Engineer | Tech Art and Engine",
       es: "Ingeniero de Software Gráfico | Tech Art y Motor"
     },
     company: "Icy Beak Studios",
