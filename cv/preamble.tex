@@ -1,0 +1,37 @@
+% Shared preamble for the CV (reference single-column, ATS-friendly style).
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[a4paper,left=1.6cm,right=1.6cm,top=0.95cm,bottom=0.95cm]{geometry}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\linespread{1.05}
+
+% Clickable links keep the same text colour (ATS-friendly, no blue soup).
+\hypersetup{colorlinks=false, pdfborder={0 0 0}}
+
+% ---- Section headings: centred, bold, small-caps, thin rule under ----
+\titleformat{\section}
+  {\centering\large\scshape\bfseries}
+  {}{0em}{}
+  [\vspace{1pt}\hrule height 0.5pt\vspace{1pt}]
+\titlespacing*{\section}{0pt}{7pt}{3pt}
+
+% ---- One experience/education entry header (single line) ----
+% #1 bold (org)  --  #2 italic (role/degree)  ........  #3 italic (dates)
+\newcommand{\cvhead}[3]{%
+  \textbf{#1} \textendash{} \textit{#2}\hfill\textit{#3}\par%
+}
+
+% ---- Compact bullet list ----
+\newlist{cvitems}{itemize}{1}
+\setlist[cvitems]{leftmargin=1.3em, labelsep=0.45em, itemsep=1.5pt,
+  topsep=2pt, parsep=0pt, label=\textbullet}
+
+% Spacing between entries
+\newcommand{\entrygap}{\vspace{3.5pt}}

@@ -7,30 +7,30 @@
 const experienceData = [
   {
     title: {
-      en: "Fullstack Developer | AI & Automation",
-      es: "Desarrollador Fullstack | IA y Automatización"
+      en: "AI Engineer | Fullstack & Automation",
+      es: "AI Engineer | Fullstack y Automatización"
     },
     company: "NTT DATA",
     logo: "ntt",
-    period: { en: "2025 — Present", es: "2025 — Actualidad" },
+    period: { en: "Jul 2026 — Present", es: "Jul 2026 — Actualidad" },
     current: true,
     description: {
-      en: "Building software solutions and process automations for banking clients. I develop front-ends in React and cloud services on Azure and Google Cloud, and work on AI agents that automate internal workflows.",
-      es: "Desarrollo de soluciones software y automatizaciones de procesos para clientes del sector bancario. Construyo front-ends en React y servicios cloud sobre Azure y Google Cloud, y trabajo en agentes de IA que automatizan flujos internos."
+      en: "Designing and shipping AI agents that automate internal workflows for banking-sector clients, including one optimization that cut an internal automation's running cost by roughly 30×. I develop front-ends in React and cloud services on Azure and Google Cloud, collaborating cross-functionally to deliver production-ready solutions.",
+      es: "Diseño y despliego agentes de IA que automatizan flujos internos para clientes del sector bancario, incluida una optimización que redujo el coste de ejecución de una automatización en torno a 30×. Desarrollo front-ends en React y servicios cloud sobre Azure y Google Cloud, colaborando de forma transversal para entregar soluciones listas para producción."
     },
-    skills: ["React", "Azure", "Google Cloud", "AI Agents", "Automation", "Git"]
+    skills: ["AI Agents", "Automation", "n8n", "Power Automate", "React", "Azure", "Google Cloud"]
   },
   {
     title: {
-      en: "Unity Developer | Netcode & Game Design Specialist",
-      es: "Desarrollador Unity | Especialista en Netcode y Diseño de Juegos"
+      en: "Unity Developer | Netcode & Game Design",
+      es: "Desarrollador Unity | Netcode y Diseño de Juegos"
     },
     company: "GGTech Entertainment",
     logo: "ggtech",
-    period: { en: "2024 — 2025", es: "2024 — 2025" },
+    period: { en: "Apr 2025 — Oct 2025", es: "Abr 2025 — Oct 2025" },
     description: {
-      en: "Developed multiplayer gameplay systems and optimized network features using Unity Netcode. Contributed to gameplay design, prototyping, and technical documentation.",
-      es: "Desarrollé sistemas multijugador y optimicé funcionalidades de red usando Unity Netcode. Contribuí al diseño de gameplay, prototipado y documentación técnica."
+      en: "Built multiplayer gameplay systems with Unity Netcode and designed gameplay mechanics, systems and levels. Contributed to a title shipped on Steam (Crimanimals), with prototyping, technical documentation and QA under TDD.",
+      es: "Construí sistemas de juego multijugador con Unity Netcode y diseñé mecánicas, sistemas y niveles. Contribuí a un título publicado en Steam (Crimanimals), con prototipado, documentación técnica y QA bajo TDD."
     },
     skills: ["Unity", "Netcode", "Design", "Git / Asana", "QA / TDD"]
   },
@@ -41,12 +41,26 @@ const experienceData = [
     },
     company: "Coding Giants",
     logo: "coding-giants",
-    period: { en: "2023 — 2024", es: "2023 — 2024" },
+    period: { en: "Jan 2025 — Mar 2025", es: "Ene 2025 — Mar 2025" },
     description: {
-      en: "Taught programming and game development to students of different ages, focusing on creativity, logic, and teamwork through Unity, C#, and Scratch-based projects.",
-      es: "Enseñé programación y desarrollo de videojuegos a estudiantes de distintas edades, fomentando la creatividad, la lógica y el trabajo en equipo mediante proyectos con Unity, C# y Scratch."
+      en: "Taught programming and game development (Scratch, App Inventor, Minecraft Education, Unity, C#) to children and teens, fostering logic, creativity and problem-solving.",
+      es: "Enseñé programación y desarrollo de videojuegos (Scratch, App Inventor, Minecraft Education, Unity, C#) a niños y adolescentes, fomentando lógica, creatividad y resolución de problemas."
     },
     skills: ["Unity", "C#", "Scratch", "Design", "Teaching"]
+  },
+  {
+    title: {
+      en: "Graphic Software Engineer | Tech Art & Engine",
+      es: "Ingeniero de Software Gráfico | Tech Art y Motor"
+    },
+    company: "Icy Beak Studios",
+    logo: "icy-beak",
+    period: { en: "Oct 2024 — Jul 2025", es: "Oct 2024 — Jul 2025" },
+    description: {
+      en: "Built real-time VFX, GLSL shaders and custom C++/OpenGL rendering (PBR, particles, shadow mapping, post-processing), supporting art and design teams through custom tech solutions.",
+      es: "Desarrollé VFX en tiempo real, shaders GLSL y renderizado propio en C++/OpenGL (PBR, partículas, shadow mapping, post-procesado), dando soporte a los equipos de arte y diseño con soluciones técnicas personalizadas."
+    },
+    skills: ["OpenGL", "C++", "Unreal", "Unity", "Tech Art", "Git / Asana"]
   },
   {
     title: {
@@ -61,20 +75,6 @@ const experienceData = [
       es: "Diseñé e implementé interfaces responsivas utilizando tecnologías web modernas. Colaboré con desarrolladores backend para ofrecer experiencias de usuario fluidas y accesibles."
     },
     skills: ["HTML", "CSS", "JavaScript", "Web Design", "eCommerce", "Prestashop"]
-  },
-  {
-    title: {
-      en: "Graphic Software Engineer",
-      es: "Ingeniero de Software Gráfico"
-    },
-    company: "Icy Beak Studios",
-    logo: "icy-beak",
-    period: { en: "2022 — 2023", es: "2022 — 2023" },
-    description: {
-      en: "Worked on the technical side of game development with a focus on rendering, engine architecture, and tools. Built graphics pipelines in OpenGL and supported art and design teams through custom tech solutions.",
-      es: "Trabajé en el apartado técnico del desarrollo de videojuegos, centrado en renderizado, arquitectura de motor y herramientas. Construí pipelines gráficos en OpenGL y apoyé a los equipos de arte y diseño con soluciones técnicas personalizadas."
-    },
-    skills: ["OpenGL", "Unreal", "Unity", "Tech Art", "Git / Asana"]
   }
 ];
 
@@ -153,8 +153,8 @@ const webProjectData = [
     imgSrc: "assets/cool-party-games.png",
     imgAlt: "Cool Party Games multiplayer minigame portal",
     description: {
-      en: "A portal of realtime party minigames playable straight from the browser, with no sign-up: pick a nickname and an avatar, create a room and share a four-letter code. The netcode runs on Cloudflare Durable Objects, where every room is its own authoritative instance with its own state, its own hibernating WebSockets and its own alarms driving the game loop. The server never broadcasts the raw state: each game exposes a per-player view, which is what keeps the impostor from reading the secret word straight out of devtools. Countdowns are rendered client-side against a clock synced through ping round-trips, while expiry is always decided server-side. Players keep their seat, role and score for 60 seconds after a dropped connection, and the host migrates automatically. Games plug into a shared contract of pure functions, so the same logic runs on the server, in the browser sandbox and in the tests. Ships with The Impostor (word clues plus voting) and Draw & Guess (streamed strokes at 45ms batches).",
-      es: "Portal de minijuegos multijugador en tiempo real para jugar desde el navegador, sin registro: eliges nombre y avatar, creas una sala y compartes un código de cuatro letras. El netcode corre sobre Cloudflare Durable Objects, donde cada sala es una instancia autoritativa con su propio estado, sus WebSockets con hibernación y sus alarmas moviendo el gameloop. El servidor nunca difunde el estado en crudo: cada juego expone una vista por jugador, que es lo que impide que el impostor lea la palabra secreta desde las devtools. Las cuentas atrás se pintan en cliente contra un reloj sincronizado con los pings, pero el vencimiento lo decide siempre el servidor. Al caerse la conexión se conservan asiento, rol y puntos durante 60 segundos, y el host migra solo. Los juegos se enchufan a un contrato de funciones puras, así que la misma lógica corre en el servidor, en el sandbox del navegador y en los tests. Incluye El Impostor (pistas por turnos y votación) y Dibuja y Adivina (trazos en streaming por lotes de 45 ms)."
+      en: "A portal of realtime party minigames playable straight from the browser, no sign-up needed: pick a nickname, create a room and share a four-letter code. Built on Cloudflare Durable Objects, with each room running as its own authoritative instance and per-player views that keep secrets hidden from devtools. Dropped players keep their seat for 60 seconds while the host migrates automatically. Ships with The Impostor and Draw & Guess.",
+      es: "Portal de minijuegos multijugador en tiempo real para jugar desde el navegador, sin registro: eliges nombre, creas una sala y compartes un código de cuatro letras. Construido sobre Cloudflare Durable Objects, con cada sala como instancia autoritativa propia y vistas por jugador que ocultan los secretos de las devtools. Si un jugador se cae, conserva su sitio 60 segundos mientras el host migra automáticamente. Incluye El Impostor y Dibuja y Adivina."
     },
     liveDemoLink: "https://cool-party-games.vercel.app",
     tags: ["React", "TypeScript", "WebSockets", "Cloudflare Durable Objects", "Netcode", "Realtime", "Vercel", "UX/UI"]
@@ -200,20 +200,6 @@ const webProjectData = [
     },
     liveDemoLink: "#",
     tags: ["HTML", "CSS", "JavaScript", "Responsive"]
-  },
-  {
-    title: {
-      en: "Multiplayer Online Pong",
-      es: "Pong Multijugador Online"
-    },
-    imgSrc: "assets/project-1.png",
-    imgAlt: "Multiplayer online pong",
-    description: {
-      en: "A multiplayer online Pong game built with HTML, CSS, and JavaScript.",
-      es: "Videojuego tipo Pong multijugador online desarrollado con HTML, CSS y JavaScript."
-    },
-    liveDemoLink: "https://docs.google.com/document/d/1n7xl82x_yLRNmv_p4AzOzH6f-xm9OidEkv-_yU-kQ-8/edit?usp=sharing",
-    tags: ["HTML", "CSS", "JavaScript", "Multiplayer Online"]
   },
   {
     title: {

@@ -10,7 +10,7 @@ const translations = {
 
     profile: {
       hello: "Hello, I'm",
-      role: "Software Developer",
+      role: "AI Engineer & Software Developer",
       download: "Download CV",
       contact: "Contact Info"
     },
@@ -20,15 +20,15 @@ const translations = {
       title: "About Me",
       experience: "Experience",
       education: "Education",
-      years: "4+ years <br />Software Developer",
+      years: "3+ years <br />AI & Software Engineering",
       degree: "Multimedia Engineering Bachelor's Degree<br />University of Alicante",
-      text: `I'm a game developer and software engineer passionate about building interactive experiences across both games and web applications, combining strong technical foundations with thoughtful design.
+      text: `I'm an AI engineer and software developer building AI agents, full-stack web apps, and cloud services, with a strong engineering foundation from game development.
 
-I’ve worked across multiple areas of game development from gameplay programming and AI systems using behavior trees, to custom engines built in C++ and OpenGL, and multiplayer experiences with Unity Netcode. Alongside this, I’ve developed modern web applications, including responsive interfaces and full-stack systems using technologies like Angular and the MEAN stack.
+At NTT DATA, I design and ship AI agents that automate internal workflows for banking-sector clients, and build React front-ends backed by Azure and Google Cloud.
 
-My experience ranges from jam-winning prototypes to commercial releases like Crimanimals, as well as professional roles as a Graphic Software Engineer and Unity 3D Developer. I’ve also worked as a web developer, creating user-focused applications and collaborating closely with backend systems.
+My engineering background comes from games: gameplay programming, AI systems using behavior trees, custom engines built in C++ and OpenGL, and multiplayer experiences with Unity Netcode. I've shipped a commercial title on Steam (Crimanimals) and won 1st Prize at Global Game Jam 2025.
 
-In addition, I enjoy sharing knowledge as a freelance programming instructor, helping others get started in both game development and software engineering.`
+I've also built modern web applications using React, Angular and the MEAN stack, and enjoy sharing knowledge as a programming instructor, helping others get started in software and game development.`
     },
 
     sections: {
@@ -60,7 +60,7 @@ In addition, I enjoy sharing knowledge as a freelance programming instructor, he
 
     profile: {
       hello: "Hola, soy",
-      role: "Desarrollador de Software",
+      role: "AI Engineer y Desarrollador de Software",
       download: "Descargar CV",
       contact: "Contacto"
     },
@@ -70,15 +70,15 @@ In addition, I enjoy sharing knowledge as a freelance programming instructor, he
       title: "Sobre mí",
       experience: "Experiencia",
       education: "Educación",
-      years: "Más de 2 años <br />Desarrollador de Software",
+      years: "Más de 3 años <br />Ingeniería de IA y Software",
       degree: "Grado en Ingeniería Multimedia<br />Universidad de Alicante",
-      text: `Soy desarrollador de videojuegos e ingeniero de software, apasionado por crear experiencias interactivas tanto en juegos como en aplicaciones web, combinando una sólida base técnica con un diseño cuidado.
+      text: `Soy ingeniero de IA y desarrollador de software. Construyo agentes de IA, aplicaciones web full-stack y servicios cloud, con una sólida base de ingeniería procedente del desarrollo de videojuegos.
 
-He trabajado en múltiples áreas del desarrollo de videojuegos, desde programación de gameplay y sistemas de IA con árboles de comportamiento, hasta motores propios en C++ y OpenGL, y experiencias multijugador con Unity Netcode. Además, he desarrollado aplicaciones web modernas, incluyendo interfaces responsivas y sistemas full-stack utilizando tecnologías como Angular y el stack MEAN.
+En NTT DATA diseño y despliego agentes de IA que automatizan flujos internos para clientes del sector bancario, y desarrollo front-ends en React sobre Azure y Google Cloud.
 
-Mi experiencia abarca desde prototipos ganadores en game jams hasta lanzamientos comerciales como Crimanimals, así como roles profesionales como Ingeniero de Software Gráfico y desarrollador Unity 3D. También he trabajado como desarrollador web, creando aplicaciones centradas en el usuario y colaborando estrechamente con sistemas backend.
+Mi base de ingeniería viene del desarrollo de videojuegos: programación de gameplay, sistemas de IA con árboles de comportamiento, motores propios en C++ y OpenGL, y experiencias multijugador con Unity Netcode. He lanzado un título comercial en Steam (Crimanimals) y gané el 1er Premio en la Global Game Jam 2025.
 
-Además, disfruto compartiendo conocimiento como instructor freelance de programación, ayudando a otros a iniciarse en el desarrollo de videojuegos y software.`
+También he desarrollado aplicaciones web modernas con React, Angular y el stack MEAN, y disfruto compartiendo conocimiento como profesor de programación, ayudando a otros a iniciarse en software y videojuegos.`
     },
 
     sections: {
